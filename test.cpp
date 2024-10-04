@@ -128,10 +128,6 @@ constexpr int M = 2e3 + 7;
 
 void solve()
 {
-    double a = 0.1, b = 0.2, c = 0.3;
-    cout << (a + b - c < EPS) << endl;
-    a <=> b;
-    cout << a << ' ' << b << endl;
 }
 
 signed main()
