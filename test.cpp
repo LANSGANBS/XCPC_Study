@@ -128,6 +128,7 @@ constexpr int M = 2e3 + 7;
 
 void solve()
 {
+    cout << "Hello World" << endl;
 }
 
 signed main()
