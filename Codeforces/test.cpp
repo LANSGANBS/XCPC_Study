@@ -128,7 +128,7 @@ constexpr int M = 2e3 + 7;
 
 void solve()
 {
-    cout << "Hello Codeforces" << endl;
+    cout << "It's MyGo!!!!!" << endl;
 }
 
 signed main()
