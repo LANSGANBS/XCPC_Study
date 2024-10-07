@@ -128,6 +128,30 @@ constexpr int M = 2e3 + 7;
 
 void solve()
 {
+    int a[11] = {1, 3, 9, 27, 81, 243, 729, 2187, 6561, 19683, 59049};
+    vector<int> ans;
+    int n, cnt = 0;
+    cin >> n;
+    while (n != 0)
+    {
+        for (int i = 10; i >= 0; i--)
+        {
+            if (n >= a[i])
+            {
+                int cs = n / a[i];
+                ans.push_back(cs);
+                cnt++;
+                n -= cs * a[i];
+                break;
+            }
+        }
+    }
+    cout << cnt << endl;
+    for (int i = 0; i < ans.size(); i++)
+    {
+        cout << ans[i] << ' ';
+    }
+    cout << endl;
 }
 
 signed main()
