@@ -128,13 +128,16 @@ constexpr int M = 2e3 + 7;
 
 void solve()
 {
+    int k;
+    cin >> k;
+    cout << k + (int)(sqrtl(k) + 0.5) << endl;
 }
 
 signed main()
 {
     buff;
     int tt = 1;
-    // cin >> tt;
+    cin >> tt;
     while (tt--)
     {
         solve();
