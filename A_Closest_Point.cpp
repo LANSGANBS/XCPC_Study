@@ -50,7 +50,7 @@ void YN(bool F)
     cout << ((F == ture) ? "YES" : "NO") << endl;
 }
 
-i64 ceilDiv(i64 n, i64 m)
+i64 ceilDiv(i64 n, i64 m) // u
 {
     if (n >= 0)
     {
@@ -62,7 +62,7 @@ i64 ceilDiv(i64 n, i64 m)
     }
 }
 
-i64 floorDiv(i64 n, i64 m)
+i64 floorDiv(i64 n, i64 m) // d
 {
     if (n >= 0)
     {
@@ -141,13 +141,32 @@ int power(int a, i64 b, int p)
 
 void solve()
 {
+    int n;
+    cin >> n;
+    vi a(n);
+    cin >> a;
+    if (n > 2)
+    {
+        cout << "NO" << endl;
+    }
+    else
+    {
+        if (a[1] - a[0] != 1)
+        {
+            cout << "YES" << endl;
+        }
+        else
+        {
+            cout << "NO" << endl;
+        }
+    }
 }
 
 signed main()
 {
     buff;
     int tt = 1;
-    // cin >> tt;
+    cin >> tt;
     while (tt--)
     {
         solve();

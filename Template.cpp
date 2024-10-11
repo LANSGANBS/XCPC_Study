@@ -3,6 +3,7 @@
 using namespace std;
 using namespace __gnu_pbds;
 using i64 = long long;
+using i128 = __int128;
 #define endl '\n'
 #define buff ios::sync_with_stdio(false), cin.tie(nullptr), cout.tie(nullptr)
 #define debug cout << "----------------------------------------------" << endl
@@ -40,17 +41,7 @@ using i64 = long long;
         cerr << #x << " = " << x << ", " << #y << " = " << y << ", " << #z << " = " << z << ", " << #w << " = " << w << "\n"; \
     };
 
-void yn(bool f)
-{
-    cout << ((f == ture) ? "yes" : "no") << endl;
-}
-
-void YN(bool F)
-{
-    cout << ((F == ture) ? "YES" : "NO") << endl;
-}
-
-i64 ceilDiv(i64 n, i64 m)
+i64 ceilDiv(i64 n, i64 m) // u
 {
     if (n >= 0)
     {
@@ -62,7 +53,7 @@ i64 ceilDiv(i64 n, i64 m)
     }
 }
 
-i64 floorDiv(i64 n, i64 m)
+i64 floorDiv(i64 n, i64 m) // d
 {
     if (n >= 0)
     {
@@ -137,6 +128,37 @@ int power(int a, i64 b, int p)
         }
     }
     return res;
+}
+
+i64 sqrt(i64 n)
+{
+    i64 s = std::sqrt(n);
+    while (s * s > n)
+    {
+        s--;
+    }
+    while ((s + 1) * (s + 1) <= n)
+    {
+        s++;
+    }
+    return s;
+}
+
+std::ostream &operator<<(std::ostream &os, i128 n)
+{
+    std::string s;
+    while (n)
+    {
+        s += '0' + n % 10;
+        n /= 10;
+    }
+    std::reverse(s.begin(), s.end());
+    return os << s;
+}
+
+i128 gcd(i128 a, i128 b)
+{
+    return b ? gcd(b, a % b) : a;
 }
 
 void solve()
