@@ -40,17 +40,7 @@ using i64 = long long;
         cerr << #x << " = " << x << ", " << #y << " = " << y << ", " << #z << " = " << z << ", " << #w << " = " << w << "\n"; \
     };
 
-void yn(bool f)
-{
-    cout << ((f == ture) ? "yes" : "no") << endl;
-}
-
-void YN(bool F)
-{
-    cout << ((F == ture) ? "YES" : "NO") << endl;
-}
-
-i64 ceilDiv(i64 n, i64 m)
+i64 ceilDiv(i64 n, i64 m) // u
 {
     if (n >= 0)
     {
@@ -62,7 +52,7 @@ i64 ceilDiv(i64 n, i64 m)
     }
 }
 
-i64 floorDiv(i64 n, i64 m)
+i64 floorDiv(i64 n, i64 m) // d
 {
     if (n >= 0)
     {
@@ -141,13 +131,32 @@ int power(int a, i64 b, int p)
 
 void solve()
 {
+    int n, k;
+    cin >> n >> k;
+    vi a(n);
+    cin >> a;
+    sort(all(a));
+    int ans = 0;
+    for (int i = n - 1; i > 0; i -= 2)
+    {
+        ans += (a[i] - a[i - 1]);
+    }
+    ans = ((ans - k > 0) ? ans - k : 0);
+    if (n & 1)
+    {
+        cout << ans + a[0] << endl;
+    }
+    else
+    {
+        cout << ans << endl;
+    }
 }
 
 signed main()
 {
     buff;
     int tt = 1;
-    // cin >> tt;
+    cin >> tt;
     while (tt--)
     {
         solve();

@@ -130,20 +130,6 @@ int power(int a, i64 b, int p)
     return res;
 }
 
-i64 sqrt(i64 n)
-{
-    i64 s = std::sqrt(n);
-    while (s * s > n)
-    {
-        s--;
-    }
-    while ((s + 1) * (s + 1) <= n)
-    {
-        s++;
-    }
-    return s;
-}
-
 std::ostream &operator<<(std::ostream &os, i128 n)
 {
     std::string s;

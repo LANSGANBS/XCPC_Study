@@ -143,18 +143,23 @@ void solve()
 {
     int l, r, L, R;
     cin >> l >> r >> L >> R;
-    int inter = min(r, R) - max(l, L) + 1;
-    int ans = inter - 1;
-    if (inter <= 0)
+    int ab = min(r, R) - max(l, L) + 1;
+    if (ab <= 0)
     {
-        ans = 1;
+        cout << 1 << endl;
+    }
+    else if ((l == L and r == R))
+    {
+        cout << ((ab - 1) ? (ab - 1) : 1) << endl;
+    }
+    else if ((l == L and r != R) or (l != L and r == R))
+    {
+        cout << ab << endl;
     }
     else
     {
-        ans += (l != L);
-        ans += (r != R);
+        cout << ab + 1 << endl;
     }
-    cout << ans << endl;
 }
 
 signed main()
