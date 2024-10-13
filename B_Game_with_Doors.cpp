@@ -141,13 +141,27 @@ int power(int a, i64 b, int p)
 
 void solve()
 {
+    int l, r, L, R;
+    cin >> l >> r >> L >> R;
+    int inter = min(r, R) - max(l, L) + 1;
+    int ans = inter - 1;
+    if (inter <= 0)
+    {
+        ans = 1;
+    }
+    else
+    {
+        ans += (l != L);
+        ans += (r != R);
+    }
+    cout << ans << endl;
 }
 
 signed main()
 {
     buff;
     int tt = 1;
-    // cin >> tt;
+    cin >> tt;
     while (tt--)
     {
         solve();
