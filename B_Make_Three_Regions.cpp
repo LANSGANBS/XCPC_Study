@@ -1,9 +1,9 @@
-#include <bits/stdc++.h>
 #include <bits/extc++.h>
+#include <bits/stdc++.h>
 using namespace std;
 using namespace __gnu_pbds;
 using i64 = long long;
-/*using i128 = __int128;*/
+using i128 = __int128;
 #define endl '\n'
 #define buff ios::sync_with_stdio(false), cin.tie(nullptr), cout.tie(nullptr)
 #define debug cout << "----------------------------------------------" << endl
@@ -36,9 +36,10 @@ using i64 = long long;
     {                                                                                             \
         cerr << #x << " = " << x << ", " << #y << " = " << y << ", " << #z << " = " << z << "\n"; \
     };
-#define debug4(x, y, z, w)                                                                                                    \
-    {                                                                                                                         \
-        cerr << #x << " = " << x << ", " << #y << " = " << y << ", " << #z << " = " << z << ", " << #w << " = " << w << "\n"; \
+#define debug4(x, y, z, w)                                                                                           \
+    {                                                                                                                \
+        cerr << #x << " = " << x << ", " << #y << " = " << y << ", " << #z << " = " << z << ", " << #w << " = " << w \
+             << "\n";                                                                                                \
     };
 
 i64 ceilDiv(i64 n, i64 m) // u
@@ -126,7 +127,7 @@ int power(int a, i64 b, int p)
     return res;
 }
 
-/*std::ostream &operator<<(std::ostream &os, i128 n)
+std::ostream &operator<<(std::ostream &os, i128 n)
 {
     std::string s;
     while (n)
@@ -136,26 +137,46 @@ int power(int a, i64 b, int p)
     }
     std::reverse(s.begin(), s.end());
     return os << s;
-}*/
+}
 
-/*i128 gcd(i128 a, i128 b)
+i128 gcd(i128 a, i128 b)
 {
     return b ? gcd(b, a % b) : a;
-}*/
+}
 
 const int mod = 1e9 + 7;
 constexpr int N = 2e5 + 7;
 constexpr int M = 2e3 + 7;
 
+int a[2][N];
+
 void solve()
 {
+    int n;
+    cin >> n;
+    vector<string> s(2);
+    for (auto &x : s)
+    {
+        cin >> x;
+    }
+    int ans = 0;
+    for (int i = 1; i < n - 1; ++i)
+    {
+        bool ok = true;
+        ok &= (s[0][i] == '.' && s[1][i] == '.');
+        ok &= (s[0][i - 1] != s[1][i - 1]);
+        ok &= (s[0][i + 1] != s[1][i + 1]);
+        ok &= (s[0][i - 1] == s[0][i + 1]);
+        ans += ok;
+    }
+    cout << ans << endl;
 }
 
 signed main()
 {
     buff;
     int tt = 1;
-    // cin >> tt;
+    cin >> tt;
     while (tt--)
     {
         solve();
