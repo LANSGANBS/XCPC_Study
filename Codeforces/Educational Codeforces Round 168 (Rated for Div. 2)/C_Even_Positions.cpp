@@ -3,7 +3,7 @@
 using namespace std;
 using namespace __gnu_pbds;
 using i64 = long long;
-/*using i128 = __int128;*/
+using i128 = __int128;
 #define endl '\n'
 #define buff ios::sync_with_stdio(false), cin.tie(nullptr), cout.tie(nullptr)
 #define debug cout << "----------------------------------------------" << endl
@@ -113,6 +113,10 @@ ostream &operator<<(ostream &out, const vector<T1> &a)
     return out;
 }
 
+const int mod = 1e9 + 7;
+constexpr int N = 2e5 + 7;
+constexpr int M = 2e3 + 7;
+
 int power(int a, i64 b, int p)
 {
     int res = 1;
@@ -126,7 +130,7 @@ int power(int a, i64 b, int p)
     return res;
 }
 
-/*std::ostream &operator<<(std::ostream &os, i128 n)
+std::ostream &operator<<(std::ostream &os, i128 n)
 {
     std::string s;
     while (n)
@@ -136,34 +140,46 @@ int power(int a, i64 b, int p)
     }
     std::reverse(s.begin(), s.end());
     return os << s;
-}*/
+}
 
-/*i128 gcd(i128 a, i128 b)
+i128 gcd(i128 a, i128 b)
 {
     return b ? gcd(b, a % b) : a;
-}*/
-
-const int mod = 1e9 + 7;
-constexpr int N = 2e5 + 7;
-constexpr int M = 2e3 + 7;
+}
 
 void solve()
 {
     int n;
     cin >> n;
-    int sum = 0;
-    for (int i = 1; i <= n; i++)
+    string s;
+    cin >> s;
+    int ans = 0;
+    deque<int> dq;
+    for (int i = 0; i < s.size(); ++i)
     {
-        sum += i * (i + 1) / 2;
+        char c = s[i];
+        if (c == '_')
+        {
+            c = dq.empty() ? '(' : ')';
+        }
+        if (c == ')')
+        {
+            ans += i - dq.back();
+            dq.pop_back();
+        }
+        else
+        {
+            dq.push_back(i);
+        }
     }
-    cout << sum << endl;
+    cout << ans << endl;
 }
 
 signed main()
 {
     buff;
     int tt = 1;
-    // cin >> tt;
+    cin >> tt;
     while (tt--)
     {
         solve();

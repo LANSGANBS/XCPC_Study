@@ -154,20 +154,34 @@ void solve()
 {
     int n;
     cin >> n;
-    vector<string> s(2);
-    for (auto &x : s)
+    vector<string> s(2, string(n, ' '));
+    for (int i = 0; i < 2; i++)
     {
-        cin >> x;
+        for (int j = 0; j < n; j++)
+        {
+            cin >> s[i][j];
+        }
     }
     int ans = 0;
     for (int i = 1; i < n - 1; ++i)
     {
-        bool ok = true;
-        ok &= (s[0][i] == '.' && s[1][i] == '.');
-        ok &= (s[0][i - 1] != s[1][i - 1]);
-        ok &= (s[0][i + 1] != s[1][i + 1]);
-        ok &= (s[0][i - 1] == s[0][i + 1]);
-        ans += ok;
+        /*
+           i
+        0 ...
+        1 *.*
+
+        0 *.*
+        1 ...
+
+        */
+        if (s[0][i] == '.' && s[0][i - 1] == '.' && s[0][i + 1] == '.' && s[1][i - 1] == 'x' && s[1][i] == '.' && s[1][i + 1] == 'x')
+        {
+            ans++;
+        }
+        else if (s[0][i - 1] == 'x' && s[0][i] == '.' && s[0][i + 1] == 'x' && s[1][i] == '.' && s[1][i - 1] == '.' && s[1][i + 1] == '.')
+        {
+            ans++;
+        }
     }
     cout << ans << endl;
 }

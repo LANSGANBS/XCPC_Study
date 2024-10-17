@@ -149,21 +149,16 @@ constexpr int M = 2e3 + 7;
 
 void solve()
 {
-    int n;
-    cin >> n;
-    int sum = 0;
-    for (int i = 1; i <= n; i++)
-    {
-        sum += i * (i + 1) / 2;
-    }
-    cout << sum << endl;
+    int x, y;
+    cin >> x >> y;
+    cout << ((y >= -1) ? "YES" : "NO") << endl;
 }
 
 signed main()
 {
     buff;
     int tt = 1;
-    // cin >> tt;
+    cin >> tt;
     while (tt--)
     {
         solve();

@@ -147,23 +147,48 @@ const int mod = 1e9 + 7;
 constexpr int N = 2e5 + 7;
 constexpr int M = 2e3 + 7;
 
+pair<int, int> a[N];
+
 void solve()
 {
-    int n;
-    cin >> n;
-    int sum = 0;
-    for (int i = 1; i <= n; i++)
+    int n, m;
+    cin >> n >> m;
+    for (int i = 1; i <= m; ++i)
     {
-        sum += i * (i + 1) / 2;
+        cin >> a[i].fr >> a[i].sc;
     }
-    cout << sum << endl;
+    int last_C = 0, last_op = 0;
+    bool flag = 1;
+    sort(a + 1, a + m + 1);
+    for (int i = 1; i <= m; ++i)
+    {
+        int tmp = a[i].fr - a[i].sc;
+        if (tmp > last_op || tmp == last_C)
+        {
+            last_op = a[i].fr;
+            last_C = tmp;
+        }
+        else
+        {
+            flag = 0;
+            break;
+        }
+    }
+    if (flag)
+    {
+        cout << "Yes" << endl;
+    }
+    else
+    {
+        cout << "No" << endl;
+    }
 }
 
 signed main()
 {
     buff;
     int tt = 1;
-    // cin >> tt;
+    cin >> tt;
     while (tt--)
     {
         solve();

@@ -149,14 +149,6 @@ constexpr int M = 2e3 + 7;
 
 void solve()
 {
-    int n;
-    cin >> n;
-    int sum = 0;
-    for (int i = 1; i <= n; i++)
-    {
-        sum += i * (i + 1) / 2;
-    }
-    cout << sum << endl;
 }
 
 signed main()

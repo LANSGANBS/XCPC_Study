@@ -147,16 +147,39 @@ const int mod = 1e9 + 7;
 constexpr int N = 2e5 + 7;
 constexpr int M = 2e3 + 7;
 
+int n, W, k, suf[N], f[N], ans;
+pair<int, int> pr[N];
+
 void solve()
 {
-    int n;
-    cin >> n;
-    int sum = 0;
+    int i, j;
+    cin >> n >> W >> k;
     for (int i = 1; i <= n; i++)
     {
-        sum += i * (i + 1) / 2;
+        cin >> pr[i].fr >> pr[i].sc;
     }
-    cout << sum << endl;
+    sort(pr + 1, pr + n + 1);
+    std::priority_queue<int, std::vector<int>, std::greater<int>> pq;
+    for (i = n; i >= n - k + 1; --i)
+    {
+        suf[i] = suf[i + 1] + pr[i].sc, pq.push(pr[i].sc);
+    }
+    for (i = n - k; i >= 1; --i)
+    {
+        pq.push(pr[i].sc), suf[i] = suf[i + 1] + pr[i].sc - pq.top(), pq.pop();
+    }
+    for (ans = suf[1], i = 1; i <= n; ++i)
+    {
+        for (j = W; j >= pr[i].fr; --j)
+        {
+            f[j] = max(f[j], f[j - pr[i].fr] + pr[i].sc);
+        }
+        for (j = 0; j <= W; ++j)
+        {
+            ans = max(ans, f[j] + suf[i + 1]);
+        }
+    }
+    cout << ans << endl;
 }
 
 signed main()
