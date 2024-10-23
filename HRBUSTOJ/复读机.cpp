@@ -1,5 +1,4 @@
 #include <bits/stdc++.h>
-#include <iostream>
 #include <bits/extc++.h>
 using namespace std;
 using namespace __gnu_pbds;
@@ -150,6 +149,20 @@ constexpr int M = 2e3 + 7;
 
 void solve()
 {
+    int n;
+    cin >> n;
+    string s;
+    while (cin >> s)
+    {
+        if (sz(s) > n)
+        {
+            cout << "Input is too long." << endl;
+        }
+        else
+        {
+            cout << s << endl;
+        }
+    }
 }
 
 signed main()

@@ -1,5 +1,4 @@
 #include <bits/stdc++.h>
-#include <iostream>
 #include <bits/extc++.h>
 using namespace std;
 using namespace __gnu_pbds;
@@ -150,13 +149,23 @@ constexpr int M = 2e3 + 7;
 
 void solve()
 {
+    int n;
+    cin >> n;
+    vector<int> a(n);
+    cin >> a;
+    int mx = 0;
+    for (int i = 0; i < n - 1; i++)
+    {
+        mx = max(mx, a[i]);
+    }
+    cout << mx + a[n - 1] << endl;
 }
 
 signed main()
 {
     buff;
     int tt = 1;
-    // cin >> tt;
+    cin >> tt;
     while (tt--)
     {
         solve();

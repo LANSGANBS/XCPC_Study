@@ -1,5 +1,4 @@
 #include <bits/stdc++.h>
-#include <iostream>
 #include <bits/extc++.h>
 using namespace std;
 using namespace __gnu_pbds;
@@ -150,13 +149,23 @@ constexpr int M = 2e3 + 7;
 
 void solve()
 {
+    int n, k;
+    cin >> n >> k;
+    k--;
+    int f[n];
+    fill(f, f + n + 1, 1);
+    for (int i = k + 1; i <= n; i++)
+    {
+        f[i] = f[i - 1] + f[i - k];
+    }
+    cout << f[n] << endl;
 }
 
 signed main()
 {
     buff;
     int tt = 1;
-    // cin >> tt;
+    cin >> tt;
     while (tt--)
     {
         solve();

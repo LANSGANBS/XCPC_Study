@@ -1,5 +1,4 @@
 #include <bits/stdc++.h>
-#include <iostream>
 #include <bits/extc++.h>
 using namespace std;
 using namespace __gnu_pbds;
@@ -150,13 +149,24 @@ constexpr int M = 2e3 + 7;
 
 void solve()
 {
+    int n, m;
+    cin >> n >> m;
+    if (n * 2 <= m)
+    {
+        // cout << (m - 2 * n) << endl;
+        cout << n + (m - 2 * n) / 4 << endl;
+    }
+    else
+    {
+        cout << m / 2 << endl;
+    }
 }
 
 signed main()
 {
     buff;
     int tt = 1;
-    // cin >> tt;
+    cin >> tt;
     while (tt--)
     {
         solve();
