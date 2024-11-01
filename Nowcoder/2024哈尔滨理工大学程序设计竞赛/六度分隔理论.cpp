@@ -145,11 +145,84 @@ int power(int a, i64 b, int p)
 }*/
 
 const int mod = 1e9 + 7;
-constexpr int N = 2e5 + 7;
+constexpr int N = 5e3 + 7;
 constexpr int M = 2e3 + 7;
+
+struct DSU
+{
+    vector<int> p, sz, c, mx;
+
+    DSU() {}
+    DSU(int n)
+    {
+        init(n);
+    }
+
+    void init(int n)
+    {
+        p.resize(n + 7);
+        sz.resize(n + 7);
+        c.resize(n + 7);
+        mx.resize(n + 7);
+        for (int i = 1; i <= n; i++)
+        {
+            p[i] = i, sz[i] = 1;
+        }
+    }
+
+    int find(int x)
+    {
+        return p[x] == x ? x : p[x] = find(p[x]);
+    }
+
+    void merge(int x, int y)
+    {
+        x = find(x), y = find(y);
+        if (x == y)
+        {
+            return;
+        }
+        if (sz[x] < sz[y])
+        {
+            swap(x, y);
+        }
+        p[y] = x, mx[x] = max(mx[x], mx[y]);
+        sz[x] += sz[y];
+    }
+};
+
+int n, m, q;
 
 void solve()
 {
+    cin >> n;
+    DSU dsu(n);
+    for (int i = 1; i <= n; i++)
+    {
+        cin >> dsu.c[i], dsu.mx[i] = dsu.c[i];
+    }
+    cin >> m;
+    while (m--)
+    {
+        int u, v;
+        cin >> u >> v;
+        dsu.merge(u, v);
+    }
+    cin >> q;
+    while (q--)
+    {
+        int u, v;
+        cin >> u >> v;
+        int fu = dsu.find(u), fv = dsu.find(v);
+        if (fu == fv)
+        {
+            cout << dsu.c[u] + dsu.c[v] << endl;
+        }
+        else
+        {
+            cout << dsu.mx[fu] + dsu.mx[fv] << endl;
+        }
+    }
 }
 
 signed main()

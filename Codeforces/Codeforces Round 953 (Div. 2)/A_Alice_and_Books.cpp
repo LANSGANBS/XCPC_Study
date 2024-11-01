@@ -150,13 +150,18 @@ constexpr int M = 2e3 + 7;
 
 void solve()
 {
+    int n;
+    cin >> n;
+    vi a(n);
+    cin >> a;
+    cout << *max_element(begin(a), end(a) - 1) + a[n - 1] << endl;
 }
 
 signed main()
 {
     buff;
     int tt = 1;
-    // cin >> tt;
+    cin >> tt;
     while (tt--)
     {
         solve();

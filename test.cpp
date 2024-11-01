@@ -1,5 +1,4 @@
 #include <bits/stdc++.h>
-#include <iostream>
 #include <bits/extc++.h>
 using namespace std;
 using namespace __gnu_pbds;
@@ -10,6 +9,7 @@ using i64 = long long;
 #define debug cout << "----------------------------------------------" << endl
 #define ture true
 #define flase false
+#define pow power
 #define interesting int
 #define all(x) begin(x), end(x)
 #define mem(a, x) memset(a, x, sizeof(a))
@@ -42,7 +42,7 @@ using i64 = long long;
         cerr << #x << " = " << x << ", " << #y << " = " << y << ", " << #z << " = " << z << ", " << #w << " = " << w << "\n"; \
     };
 
-i64 ceilDiv(i64 n, i64 m) // u
+i64 ceilDiv(i64 n, i64 m)
 {
     if (n >= 0)
     {
@@ -54,7 +54,7 @@ i64 ceilDiv(i64 n, i64 m) // u
     }
 }
 
-i64 floorDiv(i64 n, i64 m) // d
+i64 floorDiv(i64 n, i64 m)
 {
     if (n >= 0)
     {
@@ -127,29 +127,54 @@ int power(int a, i64 b, int p)
     return res;
 }
 
-/*std::ostream &operator<<(std::ostream &os, i128 n)
-{
-    std::string s;
-    while (n)
-    {
-        s += '0' + n % 10;
-        n /= 10;
-    }
-    std::reverse(s.begin(), s.end());
-    return os << s;
-}*/
-
-/*i128 gcd(i128 a, i128 b)
-{
-    return b ? gcd(b, a % b) : a;
-}*/
-
 const int mod = 1e9 + 7;
 constexpr int N = 2e5 + 7;
 constexpr int M = 2e3 + 7;
 
+int n;
+int a[N];
+int target;
+
+bool check(int t)
+{
+    return a[t] > target;
+}
+
+int binarySearch()
+{
+    int l = 0, r = n - 1;
+    if (check(0))
+    {
+        return 0;
+    }
+    if (!check(n - 1))
+    {
+        return -1;
+    }
+    while (l + 1 < r)
+    {
+        int mid = (l + r) / 2;
+        if (check(mid))
+        {
+            r = mid;
+        }
+        else
+        {
+            l = mid;
+        }
+    }
+    return r;
+}
+
 void solve()
 {
+    cin >> n;
+    for (int i = 0; i < n; i++)
+    {
+        cin >> a[i];
+    }
+    cin >> target;
+    cout << binarySearch() << endl;
 }
 
 signed main()

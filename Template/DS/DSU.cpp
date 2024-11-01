@@ -201,7 +201,7 @@ void solve()
 {
     int n, m;
     cin >> n >> m;
-    DSU dsu(n);
+    DSU DSU(n);
     while (m--)
     {
         int op;
@@ -210,12 +210,12 @@ void solve()
         if (op == 1)
         {
             cin >> x >> y;
-            dsu.merge(x, y);
+            DSU.merge(x, y);
         }
         else
         {
             cin >> x >> y;
-            cout << ((!dsu.same(x, y)) ? "N" : "Y") << endl;
+            cout << ((!DSU.same(x, y)) ? "N" : "Y") << endl;
         }
     }
 }

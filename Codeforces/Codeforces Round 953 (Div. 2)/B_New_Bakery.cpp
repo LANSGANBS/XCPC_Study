@@ -150,13 +150,32 @@ constexpr int M = 2e3 + 7;
 
 void solve()
 {
+    int n, a, b;
+    cin >> n >> a >> b;
+    int ans = 0;
+    if (b > a)
+    {
+        if (b - a <= n)
+        // cout << ((a + b + 1) * (b - a) / 2) << ' ' << (n - b + a) << ' ';
+        {
+            cout << ((a + b + 1) * (b - a) / 2) + (n - b + a) * a << endl;
+        }
+        else
+        {
+            cout << (b + b - n + 1) * n / 2 << endl;
+        }
+    }
+    else
+    {
+        cout << n * a << endl;
+    }
 }
 
 signed main()
 {
     buff;
     int tt = 1;
-    // cin >> tt;
+    cin >> tt;
     while (tt--)
     {
         solve();

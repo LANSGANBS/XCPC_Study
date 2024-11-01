@@ -1,5 +1,6 @@
 #include <bits/stdc++.h>
 #include <bits/extc++.h>
+#include "C_Manhattan_Permutations.h"
 using namespace std;
 using namespace __gnu_pbds;
 using i64 = long long;
@@ -150,13 +151,44 @@ constexpr int M = 2e3 + 7;
 
 void solve()
 {
+    /*
+    3
+    1 2 3
+    1 2 3 0+0+0=0
+    2 1 3 1+1+0=2 1<->2 +2
+    3 2 1 2+0+2=4 1<->3 +4
+    4
+    1 2 3 4
+    1 2 3 4 0+0+0+0=0
+    4 2 3 1 3+0+0+3=6 n=4 k=6 4 2 3 1 左右换 +(n-1)*2
+    1 3 2 4 0+1+1+0=2 n=4 k=2
+    3 2 1 4 2+0+2+0=4
+    4 3 2 1 3+1+1+3=8
+    */
+    int n, k;
+    cin >> n >> k;
+    pre(n);
 }
 
+void pre(long long n)
+{
+    if (!(n & 1))
+    {
+        if (n & 1)
+        {
+            cout << "No" << endl;
+        }
+        else
+        {
+            cout << "Yes" << endl;
+        }
+    }
+}
 signed main()
 {
     buff;
     int tt = 1;
-    // cin >> tt;
+    cin >> tt;
     while (tt--)
     {
         solve();

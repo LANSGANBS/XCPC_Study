@@ -42,7 +42,7 @@ using i64 = long long;
         cerr << #x << " = " << x << ", " << #y << " = " << y << ", " << #z << " = " << z << ", " << #w << " = " << w << "\n"; \
     };
 
-i64 ceilDiv(i64 n, i64 m) // u
+i64 ceilDiv(i64 n, i64 m)
 {
     if (n >= 0)
     {
@@ -54,7 +54,7 @@ i64 ceilDiv(i64 n, i64 m) // u
     }
 }
 
-i64 floorDiv(i64 n, i64 m) // d
+i64 floorDiv(i64 n, i64 m)
 {
     if (n >= 0)
     {
@@ -127,29 +127,98 @@ int power(int a, i64 b, int p)
     return res;
 }
 
-/*std::ostream &operator<<(std::ostream &os, i128 n)
-{
-    std::string s;
-    while (n)
-    {
-        s += '0' + n % 10;
-        n /= 10;
-    }
-    std::reverse(s.begin(), s.end());
-    return os << s;
-}*/
-
-/*i128 gcd(i128 a, i128 b)
-{
-    return b ? gcd(b, a % b) : a;
-}*/
-
 const int mod = 1e9 + 7;
 constexpr int N = 2e5 + 7;
 constexpr int M = 2e3 + 7;
 
+typedef char ElemType;
+
+typedef struct CSLinklist
+{
+    ElemType data;
+    struct CSLinklist *firstChild;
+    struct CSLinklist *nextSibling;
+} CSLinklist, *CSTree;
+
+CSTree createNode(ElemType data)
+{
+    CSTree newNode = (CSTree)malloc(sizeof(CSLinklist));
+    newNode->data = data;
+    newNode->firstChild = NULL;
+    newNode->nextSibling = NULL;
+    return newNode;
+}
+
+void printTree(CSTree tree, int level)
+{
+    if (tree)
+    {
+        for (int i = 0; i < level; i++)
+        {
+            printf("  ");
+        }
+        printf("%c\n", tree->data);
+        printTree(tree->firstChild, level + 1);
+        printTree(tree->nextSibling, level);
+    }
+}
+
+void freeTree(CSTree tree)
+{
+    if (tree)
+    {
+        freeTree(tree->firstChild);
+        freeTree(tree->nextSibling);
+        free(tree);
+    }
+}
+
+void deleteNode(CSTree *tree, ElemType target)
+{
+    if (!(*tree))
+        return;
+
+    if ((*tree)->data == target)
+    {
+        freeTree(*tree);
+        *tree = NULL;
+        return;
+    }
+    if ((*tree)->firstChild && (*tree)->firstChild->data == target)
+    {
+        freeTree((*tree)->firstChild);
+        (*tree)->firstChild = NULL;
+        return;
+    }
+    CSTree sibling = (*tree)->firstChild;
+    while (sibling && sibling->nextSibling)
+    {
+        if (sibling->nextSibling->data == target)
+        {
+            freeTree(sibling->nextSibling);
+            sibling->nextSibling = NULL;
+            return;
+        }
+        sibling = sibling->nextSibling;
+    }
+    deleteNode(&(*tree)->firstChild, target);
+    deleteNode(&(*tree)->nextSibling, target);
+}
+
 void solve()
 {
+    CSTree root = createNode('T');
+    root->firstChild = createNode('B');
+    root->firstChild->nextSibling = createNode('D');
+    root->firstChild->firstChild = createNode('E');
+    root->firstChild->firstChild->nextSibling = createNode('F');
+    root->firstChild->nextSibling->firstChild = createNode('G');
+    printf("原始家谱树结构:\n");
+    printTree(root, 0);
+    printf("\n删除节点 'B' 后的家谱树结构:\n");
+    deleteNode(&root, 'B');
+    printTree(root, 0);
+    freeTree(root);
 }
 
 signed main()
