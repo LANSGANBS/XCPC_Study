@@ -131,50 +131,9 @@ const int mod = 1e9 + 7;
 constexpr int N = 2e5 + 7;
 constexpr int M = 2e3 + 7;
 
-int n;
-int a[N];
-int target;
-
-bool check(int t)
-{
-    return a[t] > target;
-}
-
-int binarySearch()
-{
-    int l = 0, r = n - 1;
-    if (check(0))
-    {
-        return 0;
-    }
-    if (!check(n - 1))
-    {
-        return -1;
-    }
-    while (l + 1 < r)
-    {
-        int mid = (l + r) / 2;
-        if (check(mid))
-        {
-            r = mid;
-        }
-        else
-        {
-            l = mid;
-        }
-    }
-    return r;
-}
-
 void solve()
 {
-    cin >> n;
-    for (int i = 0; i < n; i++)
-    {
-        cin >> a[i];
-    }
-    cin >> target;
-    cout << binarySearch() << endl;
+    cout << "Hello World" << endl;
 }
 
 signed main()
