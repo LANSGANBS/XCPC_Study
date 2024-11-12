@@ -1,7 +1,7 @@
 #include <bits/stdc++.h>
-#include <bits/extc++.h>
+// #include <bits/extc++.h>
 using namespace std;
-using namespace __gnu_pbds;
+// using namespace __gnu_pbds;
 using i64 = long long;
 /*using i128 = __int128;*/
 #define endl '\n'
@@ -9,6 +9,7 @@ using i64 = long long;
 #define debug cout << "----------------------------------------------" << endl
 #define ture true
 #define flase false
+#define pow power
 #define interesting int
 #define all(x) begin(x), end(x)
 #define mem(a, x) memset(a, x, sizeof(a))
@@ -41,7 +42,7 @@ using i64 = long long;
         cerr << #x << " = " << x << ", " << #y << " = " << y << ", " << #z << " = " << z << ", " << #w << " = " << w << "\n"; \
     };
 
-i64 ceilDiv(i64 n, i64 m) // u
+i64 ceilDiv(i64 n, i64 m)
 {
     if (n >= 0)
     {
@@ -53,7 +54,7 @@ i64 ceilDiv(i64 n, i64 m) // u
     }
 }
 
-i64 floorDiv(i64 n, i64 m) // d
+i64 floorDiv(i64 n, i64 m)
 {
     if (n >= 0)
     {
@@ -65,53 +66,53 @@ i64 floorDiv(i64 n, i64 m) // d
     }
 }
 
-template <typename T1, typename T2>
-istream &operator>>(istream &in, pair<T1, T2> &a)
-{
-    return in >> a.first >> a.second;
-}
+// template <typename T1, typename T2>
+// istream &operator>>(istream &in, pair<T1, T2> &a)
+// {
+//     return in >> a.first >> a.second;
+// }
 
-template <typename T1>
-istream &operator>>(istream &in, vector<T1> &a)
-{
-    for (auto &x : a)
-    {
-        in >> x;
-    }
-    return in;
-}
+// template <typename T1>
+// istream &operator>>(istream &in, vector<T1> &a)
+// {
+//     for (auto &x : a)
+//     {
+//         in >> x;
+//     }
+//     return in;
+// }
 
-template <typename T1, typename T2>
-ostream &operator<<(ostream &out, const pair<T1, T2> &a)
-{
-    return out << a.first << ' ' << a.second;
-}
+// template <typename T1, typename T2>
+// ostream &operator<<(ostream &out, const pair<T1, T2> &a)
+// {
+//     return out << a.first << ' ' << a.second;
+// }
 
-template <typename T1, typename T2>
-ostream &operator<<(ostream &out, const vector<pair<T1, T2>> &a)
-{
-    for (auto &x : a)
-    {
-        out << x << endl;
-    }
-    return out;
-}
+// template <typename T1, typename T2>
+// ostream &operator<<(ostream &out, const vector<pair<T1, T2>> &a)
+// {
+//     for (auto &x : a)
+//     {
+//         out << x << endl;
+//     }
+//     return out;
+// }
 
-template <typename T1>
-ostream &operator<<(ostream &out, const vector<T1> &a)
-{
-    int n = a.size();
-    if (!n)
-    {
-        return out;
-    }
-    out << a[0];
-    for (int i = 1; i < n; i++)
-    {
-        out << ' ' << a[i];
-    }
-    return out;
-}
+// template <typename T1>
+// ostream &operator<<(ostream &out, const vector<T1> &a)
+// {
+//     int n = a.size();
+//     if (!n)
+//     {
+//         return out;
+//     }
+//     out << a[0];
+//     for (int i = 1; i < n; i++)
+//     {
+//         out << ' ' << a[i];
+//     }
+//     return out;
+// }
 
 int power(int a, i64 b, int p)
 {
@@ -126,71 +127,31 @@ int power(int a, i64 b, int p)
     return res;
 }
 
-/*std::ostream &operator<<(std::ostream &os, i128 n)
-{
-    std::string s;
-    while (n)
-    {
-        s += '0' + n % 10;
-        n /= 10;
-    }
-    std::reverse(s.begin(), s.end());
-    return os << s;
-}*/
-
-/*i128 gcd(i128 a, i128 b)
-{
-    return b ? gcd(b, a % b) : a;
-}*/
-
 const int mod = 1e9 + 7;
-constexpr int N = 1e6 + 7;
+constexpr int N = 2e5 + 7;
 constexpr int M = 2e3 + 7;
 
 void solve()
 {
-    int n, m;
-    cin >> n >> m;
-    vi a(n), b(n), c(m);
-    cin >> a >> b >> c;
-    int mx = *max_element(a.begin(), a.end()) + 1;
-    vi best(mx, INT_MAX);
-    vi calc(mx, 0LL);
-    for (int i = 0; i < sz(a); i++)
+    int n;
+    cin >> n;
+    vi a(n);
+    for (int i = 0; i < n; i++)
     {
-        best[a[i]] = min(best[a[i]], a[i] - b[i]);
+        cin >> a[i];
     }
-    for (int v = 1; v < mx; v++)
+    int res = 0;
+    for (int i = 0; i < n; i++)
     {
-        best[v] = min(best[v], best[v - 1]);
+        res |= a[i];
     }
-    for (int v = 1; v < mx; v++)
-    {
-        if (v >= best[v])
-        {
-            calc[v] = 2 + calc[v - best[v]];
-        }
-    }
-    int ans = 0;
-    for (int v : c)
-    {
-        int cur = v;
-        if (cur >= mx)
-        {
-            int k = (cur - mx + 1 + best[mx - 1]) / best[mx - 1];
-            ans += 2 * k;
-            cur -= k * best[mx - 1];
-        }
-        ans += calc[cur];
-    }
-    cout << ans << endl;
+    cout << res << endl;
 }
-
 signed main()
 {
     buff;
     int tt = 1;
-    // cin >> tt;
+    cin >> tt;
     while (tt--)
     {
         solve();

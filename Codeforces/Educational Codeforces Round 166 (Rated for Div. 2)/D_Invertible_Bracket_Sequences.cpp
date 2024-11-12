@@ -9,6 +9,7 @@ using i64 = long long;
 #define debug cout << "----------------------------------------------" << endl
 #define ture true
 #define flase false
+#define pow power
 #define interesting int
 #define all(x) begin(x), end(x)
 #define mem(a, x) memset(a, x, sizeof(a))
@@ -144,46 +145,11 @@ int power(int a, i64 b, int p)
 }*/
 
 const int mod = 1e9 + 7;
-constexpr int N = 1e6 + 7;
+constexpr int N = 2e5 + 7;
 constexpr int M = 2e3 + 7;
 
 void solve()
 {
-    int n, m;
-    cin >> n >> m;
-    vi a(n), b(n), c(m);
-    cin >> a >> b >> c;
-    int mx = *max_element(a.begin(), a.end()) + 1;
-    vi best(mx, INT_MAX);
-    vi calc(mx, 0LL);
-    for (int i = 0; i < sz(a); i++)
-    {
-        best[a[i]] = min(best[a[i]], a[i] - b[i]);
-    }
-    for (int v = 1; v < mx; v++)
-    {
-        best[v] = min(best[v], best[v - 1]);
-    }
-    for (int v = 1; v < mx; v++)
-    {
-        if (v >= best[v])
-        {
-            calc[v] = 2 + calc[v - best[v]];
-        }
-    }
-    int ans = 0;
-    for (int v : c)
-    {
-        int cur = v;
-        if (cur >= mx)
-        {
-            int k = (cur - mx + 1 + best[mx - 1]) / best[mx - 1];
-            ans += 2 * k;
-            cur -= k * best[mx - 1];
-        }
-        ans += calc[cur];
-    }
-    cout << ans << endl;
 }
 
 signed main()

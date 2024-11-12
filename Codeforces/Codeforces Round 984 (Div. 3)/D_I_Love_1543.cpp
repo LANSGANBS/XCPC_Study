@@ -9,6 +9,7 @@ using i64 = long long;
 #define debug cout << "----------------------------------------------" << endl
 #define ture true
 #define flase false
+#define pow power
 #define interesting int
 #define all(x) begin(x), end(x)
 #define mem(a, x) memset(a, x, sizeof(a))
@@ -144,53 +145,55 @@ int power(int a, i64 b, int p)
 }*/
 
 const int mod = 1e9 + 7;
-constexpr int N = 1e6 + 7;
+constexpr int N = 2e5 + 7;
 constexpr int M = 2e3 + 7;
+
+char a[M][M];
+char layer[M];
 
 void solve()
 {
-    int n, m;
+    int n, m, cnt = 0;
     cin >> n >> m;
-    vi a(n), b(n), c(m);
-    cin >> a >> b >> c;
-    int mx = *max_element(a.begin(), a.end()) + 1;
-    vi best(mx, INT_MAX);
-    vi calc(mx, 0LL);
-    for (int i = 0; i < sz(a); i++)
+    for (int i = 0; i < n; ++i)
     {
-        best[a[i]] = min(best[a[i]], a[i] - b[i]);
+        cin >> a[i];
     }
-    for (int v = 1; v < mx; v++)
+    for (int i = 0; (i + 1) * 2 <= n && (i + 1) * 2 <= m; ++i)
     {
-        best[v] = min(best[v], best[v - 1]);
-    }
-    for (int v = 1; v < mx; v++)
-    {
-        if (v >= best[v])
+        int pos = 0;
+        for (int j = i; j < m - i; ++j)
         {
-            calc[v] = 2 + calc[v - best[v]];
+            layer[pos++] = a[i][j];
+        }
+        for (int j = i + 1; j < n - i - 1; ++j)
+        {
+            layer[pos++] = a[j][m - i - 1];
+        }
+        for (int j = m - i - 1; j >= i; --j)
+        {
+            layer[pos++] = a[n - i - 1][j];
+        }
+        for (int j = n - i - 2; j >= i + 1; --j)
+        {
+            layer[pos++] = a[j][i];
+        }
+        for (int j = 0; j < pos; ++j)
+        {
+            if (layer[j] == '1' && layer[(j + 1) % pos] == '5' && layer[(j + 2) % pos] == '4' && layer[(j + 3) % pos] == '3')
+            {
+                cnt++;
+            }
         }
     }
-    int ans = 0;
-    for (int v : c)
-    {
-        int cur = v;
-        if (cur >= mx)
-        {
-            int k = (cur - mx + 1 + best[mx - 1]) / best[mx - 1];
-            ans += 2 * k;
-            cur -= k * best[mx - 1];
-        }
-        ans += calc[cur];
-    }
-    cout << ans << endl;
+    cout << cnt << endl;
 }
 
 signed main()
 {
     buff;
     int tt = 1;
-    // cin >> tt;
+    cin >> tt;
     while (tt--)
     {
         solve();

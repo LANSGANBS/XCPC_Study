@@ -9,6 +9,7 @@ using i64 = long long;
 #define debug cout << "----------------------------------------------" << endl
 #define ture true
 #define flase false
+#define pow power
 #define interesting int
 #define all(x) begin(x), end(x)
 #define mem(a, x) memset(a, x, sizeof(a))
@@ -144,53 +145,71 @@ int power(int a, i64 b, int p)
 }*/
 
 const int mod = 1e9 + 7;
-constexpr int N = 1e6 + 7;
+constexpr int N = 2e5 + 7;
 constexpr int M = 2e3 + 7;
+
+string buf;
+int n;
+
+bool check_1100(int i)
+{
+    if (i < 0)
+    {
+        return false;
+    }
+    if (i >= n - 3)
+    {
+        return false;
+    }
+    if (buf[i] == '1' && buf[i + 1] == '1' && buf[i + 2] == '0' && buf[i + 3] == '0')
+    {
+        return true;
+    }
+    return false;
+}
 
 void solve()
 {
-    int n, m;
-    cin >> n >> m;
-    vi a(n), b(n), c(m);
-    cin >> a >> b >> c;
-    int mx = *max_element(a.begin(), a.end()) + 1;
-    vi best(mx, INT_MAX);
-    vi calc(mx, 0LL);
-    for (int i = 0; i < sz(a); i++)
+    cin >> buf;
+    n = sz(buf);
+    int cnt = 0;
+    for (int i = 0; i < n; i++)
     {
-        best[a[i]] = min(best[a[i]], a[i] - b[i]);
-    }
-    for (int v = 1; v < mx; v++)
-    {
-        best[v] = min(best[v], best[v - 1]);
-    }
-    for (int v = 1; v < mx; v++)
-    {
-        if (v >= best[v])
+        if (check_1100(i))
         {
-            calc[v] = 2 + calc[v - best[v]];
+            cnt++;
         }
     }
-    int ans = 0;
-    for (int v : c)
+    int q;
+    cin >> q;
+    while (q--)
     {
-        int cur = v;
-        if (cur >= mx)
+        int i, v;
+        cin >> i >> v;
+        i--;
+        if (buf[i] != '0' + v)
         {
-            int k = (cur - mx + 1 + best[mx - 1]) / best[mx - 1];
-            ans += 2 * k;
-            cur -= k * best[mx - 1];
+            bool before = check_1100(i - 3) || check_1100(i - 2) || check_1100(i - 1) || check_1100(i);
+            buf[i] = '0' + v;
+            bool after = check_1100(i - 3) || check_1100(i - 2) || check_1100(i - 1) || check_1100(i);
+            cnt += after - before;
         }
-        ans += calc[cur];
+        if (cnt)
+        {
+            cout << "YES" << endl;
+        }
+        else
+        {
+            cout << "NO" << endl;
+        }
     }
-    cout << ans << endl;
 }
 
 signed main()
 {
     buff;
     int tt = 1;
-    // cin >> tt;
+    cin >> tt;
     while (tt--)
     {
         solve();

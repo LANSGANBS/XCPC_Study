@@ -9,6 +9,7 @@ using i64 = long long;
 #define debug cout << "----------------------------------------------" << endl
 #define ture true
 #define flase false
+#define pow power
 #define interesting int
 #define all(x) begin(x), end(x)
 #define mem(a, x) memset(a, x, sizeof(a))
@@ -144,44 +145,47 @@ int power(int a, i64 b, int p)
 }*/
 
 const int mod = 1e9 + 7;
-constexpr int N = 1e6 + 7;
+constexpr int N = 2e5 + 7;
 constexpr int M = 2e3 + 7;
+
+pair<int, int> pr[N];
+map<int, int> mp;
+
+bool cmp(const pair<int, int> &a, const pair<int, int> &b)
+{
+    return a.second > b.second;
+}
 
 void solve()
 {
-    int n, m;
-    cin >> n >> m;
-    vi a(n), b(n), c(m);
-    cin >> a >> b >> c;
-    int mx = *max_element(a.begin(), a.end()) + 1;
-    vi best(mx, INT_MAX);
-    vi calc(mx, 0LL);
-    for (int i = 0; i < sz(a); i++)
+    mp.clear();
+    int n, k;
+    cin >> n >> k;
+    for (int i = 0; i < k; i++)
     {
-        best[a[i]] = min(best[a[i]], a[i] - b[i]);
+        cin >> pr[i].fr >> pr[i].sc;
     }
-    for (int v = 1; v < mx; v++)
+    for (int i = 0; i < k; i++)
     {
-        best[v] = min(best[v], best[v - 1]);
+        mp[pr[i].fr] += pr[i].sc;
     }
-    for (int v = 1; v < mx; v++)
+    vi a;
+    for (int i = 0; i < sz(mp); i++)
     {
-        if (v >= best[v])
-        {
-            calc[v] = 2 + calc[v - best[v]];
-        }
+        a.pb(mp[i]);
     }
+    sort(all(a), greater<int>());
     int ans = 0;
-    for (int v : c)
+    for (int i = 0; i < n; i++)
     {
-        int cur = v;
-        if (cur >= mx)
+        if (a[i])
         {
-            int k = (cur - mx + 1 + best[mx - 1]) / best[mx - 1];
-            ans += 2 * k;
-            cur -= k * best[mx - 1];
+            ans += a[i];
         }
-        ans += calc[cur];
+        else
+        {
+            break;
+        }
     }
     cout << ans << endl;
 }
@@ -190,7 +194,7 @@ signed main()
 {
     buff;
     int tt = 1;
-    // cin >> tt;
+    cin >> tt;
     while (tt--)
     {
         solve();

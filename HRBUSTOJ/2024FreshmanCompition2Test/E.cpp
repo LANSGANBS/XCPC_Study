@@ -9,6 +9,7 @@ using i64 = long long;
 #define debug cout << "----------------------------------------------" << endl
 #define ture true
 #define flase false
+#define pow power
 #define interesting int
 #define all(x) begin(x), end(x)
 #define mem(a, x) memset(a, x, sizeof(a))
@@ -113,14 +114,14 @@ ostream &operator<<(ostream &out, const vector<T1> &a)
     return out;
 }
 
-int power(int a, i64 b, int p)
+int power(int a, i64 b)
 {
     int res = 1;
-    for (; b; b /= 2, a = 1LL * a * a % p)
+    for (; b; b /= 2, a = 1LL * a * a)
     {
         if (b % 2)
         {
-            res = 1LL * res * a % p;
+            res = 1LL * res * a;
         }
     }
     return res;
@@ -144,44 +145,160 @@ int power(int a, i64 b, int p)
 }*/
 
 const int mod = 1e9 + 7;
-constexpr int N = 1e6 + 7;
+constexpr int N = 2e5 + 7;
 constexpr int M = 2e3 + 7;
+
+template <int Mod>
+class ModInt
+{
+private:
+    int value;
+
+public:
+    static constexpr int mod = Mod;
+
+    ModInt() : value(0) {}
+
+    ModInt(int v)
+    {
+        value = v % Mod;
+        if (value < 0)
+        {
+            value += Mod;
+        }
+    }
+
+    int get_value() const
+    {
+        return value;
+    }
+
+    ModInt operator+(const ModInt &other) const
+    {
+        return ModInt(*this) += other;
+    }
+
+    ModInt &operator+=(const ModInt &other)
+    {
+        value = (value + other.value) % Mod;
+        if (value < 0)
+        {
+            value += Mod;
+        }
+        return *this;
+    }
+
+    ModInt operator-(const ModInt &other) const
+    {
+        return ModInt(*this) -= other;
+    }
+
+    ModInt &operator-=(const ModInt &other)
+    {
+        value = (value - other.value + Mod) % Mod;
+        return *this;
+    }
+
+    ModInt operator*(const ModInt &other) const
+    {
+        return ModInt(value * other.value) %= Mod;
+    }
+
+    ModInt &operator*=(const ModInt &other)
+    {
+        value = (value * other.value) % Mod;
+        return *this;
+    }
+
+    ModInt operator/(const ModInt &other) const
+    {
+        return ModInt(*this) /= other;
+    }
+
+    ModInt &operator/=(const ModInt &other)
+    {
+        value = (value * other.inverse()) % Mod;
+        return *this;
+    }
+
+    ModInt inverse() const
+    {
+        return power(*this, Mod - 2);
+    }
+
+    static ModInt power(ModInt base, int exponent)
+    {
+        ModInt result(1);
+        ModInt baseValue = base;
+        while (exponent > 0)
+        {
+            if (exponent % 2 == 1)
+            {
+                result *= baseValue;
+            }
+            baseValue *= baseValue;
+            exponent /= 2;
+        }
+        return result;
+    }
+
+    friend std::ostream &operator<<(std::ostream &os, const ModInt &m)
+    {
+        os << m.value;
+        return os;
+    }
+
+    ModInt &operator%=(int m)
+    {
+        value %= m;
+        return *this;
+    }
+
+private:
+    static int inverseMod(int a, int m)
+    {
+        a = a % m;
+        for (int x = 1; x < m; x++)
+        {
+            if ((a * x) % m == 1)
+            {
+                return x;
+            }
+        }
+        return 1;
+    }
+};
+
+template <int Mod>
+int niyuan(const ModInt<Mod> &x)
+{
+    return x.inverse().get_value();
+}
+
+int a[N];
 
 void solve()
 {
-    int n, m;
-    cin >> n >> m;
-    vi a(n), b(n), c(m);
-    cin >> a >> b >> c;
-    int mx = *max_element(a.begin(), a.end()) + 1;
-    vi best(mx, INT_MAX);
-    vi calc(mx, 0LL);
-    for (int i = 0; i < sz(a); i++)
+    int nn, kk;
+    cin >> nn >> kk;
+    ModInt<mod> n, k;
+    n = nn, k = kk;
+    ModInt<mod> sum = 0, cnt = 0;
+    for (int i = 1; i <= nn; i++)
     {
-        best[a[i]] = min(best[a[i]], a[i] - b[i]);
-    }
-    for (int v = 1; v < mx; v++)
-    {
-        best[v] = min(best[v], best[v - 1]);
-    }
-    for (int v = 1; v < mx; v++)
-    {
-        if (v >= best[v])
+        cin >> a[i];
+        sum += a[i];
+        if (a[i] != 0)
         {
-            calc[v] = 2 + calc[v - best[v]];
+            cnt += 1;
         }
     }
-    int ans = 0;
-    for (int v : c)
+    ModInt<mod> fenmu = niyuan(n);
+    ModInt<mod> p = cnt * fenmu;
+    ModInt<mod> ans = sum * fenmu * k;
+    for (int i = 1; i <= kk; i++)
     {
-        int cur = v;
-        if (cur >= mx)
-        {
-            int k = (cur - mx + 1 + best[mx - 1]) / best[mx - 1];
-            ans += 2 * k;
-            cur -= k * best[mx - 1];
-        }
-        ans += calc[cur];
+        ans = (ans + (k - i) * p * fenmu);
     }
     cout << ans << endl;
 }
@@ -190,7 +307,7 @@ signed main()
 {
     buff;
     int tt = 1;
-    // cin >> tt;
+    cin >> tt;
     while (tt--)
     {
         solve();

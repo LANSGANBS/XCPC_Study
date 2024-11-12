@@ -1,144 +1,109 @@
 #include <bits/stdc++.h>
-#include <bits/extc++.h>
 using namespace std;
-using namespace __gnu_pbds;
-using i64 = long long;
-/*using i128 = __int128;*/
-#define endl '\n'
-#define buff ios::sync_with_stdio(false), cin.tie(nullptr), cout.tie(nullptr)
-#define debug cout << "----------------------------------------------" << endl
-#define ture true
-#define flase false
-#define pow power
-#define interesting int
-#define all(x) begin(x), end(x)
-#define mem(a, x) memset(a, x, sizeof(a))
-#define gcd(a, b) __gcd(a, b)
-#define lcm(a, b) (a / gcd(a, b) * b)
-#define sz(x) (int)x.size()
-#define lowbit(x) (x & -x)
-#define pb push_back
-#define EPS 1e-7
-#define ll long long
-#define int ll
-#define ld long double
-#define fr first
-#define sc second
-#define vi vector<int>
-#define debug1(x)                         \
-    {                                     \
-        cerr << #x << " = " << x << "\n"; \
-    };
-#define debug2(x, y)                                                  \
-    {                                                                 \
-        cerr << #x << " = " << x << ", " << #y << " = " << y << "\n"; \
-    };
-#define debug3(x, y, z)                                                                           \
-    {                                                                                             \
-        cerr << #x << " = " << x << ", " << #y << " = " << y << ", " << #z << " = " << z << "\n"; \
-    };
-#define debug4(x, y, z, w)                                                                                                    \
-    {                                                                                                                         \
-        cerr << #x << " = " << x << ", " << #y << " = " << y << ", " << #z << " = " << z << ", " << #w << " = " << w << "\n"; \
-    };
+#define int long long
+const int N = 1e5 + 7;
 
-i64 ceilDiv(i64 n, i64 m)
+struct HLD
 {
-    if (n >= 0)
-    {
-        return (n + m - 1) / m;
-    }
-    else
-    {
-        return n / m;
-    }
-}
+    int n, idx;
+    vector<vector<int>> ver;
+    vector<int> siz, dep;
+    vector<int> top, son, parent;
 
-i64 floorDiv(i64 n, i64 m)
-{
-    if (n >= 0)
+    HLD(int n)
     {
-        return n / m;
-    }
-    else
-    {
-        return (n - m + 1) / m;
-    }
-}
+        this->n = n;
+        ver.resize(n + 1);
+        siz.resize(n + 1);
+        dep.resize(n + 1);
 
-template <typename T1, typename T2>
-istream &operator>>(istream &in, pair<T1, T2> &a)
-{
-    return in >> a.first >> a.second;
-}
-
-template <typename T1>
-istream &operator>>(istream &in, vector<T1> &a)
-{
-    for (auto &x : a)
-    {
-        in >> x;
+        top.resize(n + 1);
+        son.resize(n + 1);
+        parent.resize(n + 1);
     }
-    return in;
-}
-
-template <typename T1, typename T2>
-ostream &operator<<(ostream &out, const pair<T1, T2> &a)
-{
-    return out << a.first << ' ' << a.second;
-}
-
-template <typename T1, typename T2>
-ostream &operator<<(ostream &out, const vector<pair<T1, T2>> &a)
-{
-    for (auto &x : a)
-    {
-        out << x << endl;
+    void add(int x, int y)
+    { // 建立双向边
+        ver[x].push_back(y);
+        ver[y].push_back(x);
     }
-    return out;
-}
-
-template <typename T1>
-ostream &operator<<(ostream &out, const vector<T1> &a)
-{
-    int n = a.size();
-    if (!n)
+    void dfs1(int x)
     {
-        return out;
-    }
-    out << a[0];
-    for (int i = 1; i < n; i++)
-    {
-        out << ' ' << a[i];
-    }
-    return out;
-}
-
-int power(int a, i64 b, int p)
-{
-    int res = 1;
-    for (; b; b /= 2, a = 1LL * a * a % p)
-    {
-        if (b % 2)
+        siz[x] = 1;
+        dep[x] = dep[parent[x]] + 1;
+        for (auto y : ver[x])
         {
-            res = 1LL * res * a % p;
+            if (y == parent[x])
+                continue;
+            parent[y] = x;
+            dfs1(y);
+            siz[x] += siz[y];
+            if (siz[y] > siz[son[x]])
+            {
+                son[x] = y;
+            }
         }
     }
-    return res;
-}
-
-const int mod = 1e9 + 7;
-constexpr int N = 2e5 + 7;
-constexpr int M = 2e3 + 7;
+    void dfs2(int x, int up)
+    {
+        top[x] = up;
+        if (son[x])
+            dfs2(son[x], up);
+        for (auto y : ver[x])
+        {
+            if (y == parent[x] || y == son[x])
+                continue;
+            dfs2(y, y);
+        }
+    }
+    int lca(int x, int y)
+    {
+        while (top[x] != top[y])
+        {
+            if (dep[top[x]] > dep[top[y]])
+            {
+                x = parent[top[x]];
+            }
+            else
+            {
+                y = parent[top[y]];
+            }
+        }
+        return dep[x] < dep[y] ? x : y;
+    }
+    int clac(int x, int y)
+    { // 查询两点间距离
+        return dep[x] + dep[y] - 2 * dep[lca(x, y)];
+    }
+    void work(int root = 1)
+    { // 在此初始化
+        dfs1(root);
+        dfs2(root, root);
+    }
+};
 
 void solve()
 {
-    cout << "Hello World" << endl;
+    int n, m, s;
+    cin >> n >> m >> s;
+    HLD tree(n);
+    for (int i = 1; i < n; i++)
+    {
+        int x, y;
+        cin >> x >> y;
+        tree.add(x, y);
+    }
+    tree.work(s);
+    for (int i = 0; i < m; i++)
+    {
+        int a, b;
+        cin >> a >> b;
+        cout << tree.lca(a, b) << endl;
+    }
 }
 
 signed main()
 {
-    buff;
+    ios::sync_with_stdio(0), cin.tie(0), cout.tie(0);
     int tt = 1;
     // cin >> tt;
     while (tt--)
