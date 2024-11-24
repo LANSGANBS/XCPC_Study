@@ -9,6 +9,22 @@ const int mod = 998244353;
 
 void solve()
 {
+    map<int, int> mp;
+    for (int i = 0; i < 4; i++)
+    {
+        int x;
+        cin >> x;
+        x--;
+        mp[x]++;
+    }
+    for (int i = 0; i < 5; i++)
+    {
+        if (!mp[i])
+        {
+            cout << i + 1 << endl;
+            return;
+        }
+    }
 }
 
 signed main()

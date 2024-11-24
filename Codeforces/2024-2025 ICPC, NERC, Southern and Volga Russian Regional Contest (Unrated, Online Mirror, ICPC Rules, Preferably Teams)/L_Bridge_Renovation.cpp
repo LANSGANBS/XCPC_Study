@@ -9,6 +9,12 @@ const int mod = 998244353;
 
 void solve()
 {
+    int n;
+    cin >> n;
+    if (n % 3 == 0)
+    {
+        cout << n / 3 + n << endl;
+    }
 }
 
 signed main()
@@ -16,7 +22,7 @@ signed main()
     ios::sync_with_stdio(false);
     cin.tie(0), cout.tie(0);
     int T = 1;
-    // cin >> T;
+    cin >> T;
     while (T--)
         solve();
 }

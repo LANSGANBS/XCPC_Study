@@ -1,16 +1,47 @@
+/**
+ *
+ *
+ *
+ *                            iiiiii         iiiiiiiiii       iiiiiiiiiiiiii
+ *                       iiiiiiiiiiiii   iiiiiii    iiii    iiiiiiiiiiiiiii                          ii   iiii
+ *                    iiiiiiii     iiiiiiiii         iiii       iiii iii              iii          iiiiiiiiii
+ *                 iiiiiii          iiiiii           iiii    iiii   ii           iiiiiiiiii      iiii iiii
+ *               iiiiii            iiiii             iiii iiii        iii      iiii    iiiiiiiiiiiiiiiii  ii
+ *             iiiiii            iiiiiii            iiiiiii       iiiiiiii   iii    iiiiiiiiiiiiii iii  iiii
+ *           iiiiii             iiiiiii            iiiii   ii   iiii       iiiiiiiiiii iiii  iii iiii iiii      iii
+ *          iiiii              iiiiiiii       ii        iiiii iiii    iiiiiiiii        iii iii  iii  iii  ii  iiii
+ *        iiiiii              iiiiiiii      iiiii     iiiii iiiiiiiiiiiiiiii         iii  iii  ii  iii  iii iiii
+ *       iiiii                 iiiiii     iiii     iiiiii iiiiiii    iii iii       iiii  ii   i   ii  iii  iii
+ *     iiiiii                            iiii  iiiiiiiiiiiiiii       iii iiii   iiiii  iii  ii  iii  iii  ii
+ *    iiiii                              iiiiiiii iiiiiiiiii       iiii   iiiiiiiii            ii  iii  ii
+ *   iiiii                                     iiiiii  iiii      iiiii              iii      ii   ii  i
+ * iiiiii                                  iiiiiiii   iiiii    iiiii                        ii  ii   ii
+ * iiiii                                iiii  iiii    iiiiiiiiiiii                             ii
+ *  iii                              iiii   iiii       iiiiiiii
+ *                                iiiii   iiii
+ *                              iiii     iiii
+ *                            iiii    iiiii
+ *                          iii     iiiii
+ *                        iii     iiiii
+ *                       iii   iiiiii
+ *                       iiiiiiiii
+ *                       iiiiii
+ *
+ *
+ *
+ **/
 #include <bits/stdc++.h>
 #include <bits/extc++.h>
 using namespace std;
 using namespace __gnu_pbds;
-using i64 = long long;
-/*using i128 = __int128;*/
+#define i64 long long
+#define i128 __int128
 #define endl '\n'
 #define buff ios::sync_with_stdio(false), cin.tie(nullptr), cout.tie(nullptr)
 #define debug cout << "----------------------------------------------" << endl
 #define ture true
 #define flase false
 #define pow power
-#define interesting int
 #define all(x) begin(x), end(x)
 #define mem(a, x) memset(a, x, sizeof(a))
 #define gcd(a, b) __gcd(a, b)
@@ -19,9 +50,8 @@ using i64 = long long;
 #define lowbit(x) (x & -x)
 #define pb push_back
 #define EPS 1e-7
-#define ll long long
 #define int ll
-#define ld long double
+#define ll long long
 #define fr first
 #define sc second
 #define vi vector<int>
@@ -127,6 +157,19 @@ int power(int a, i64 b, int p)
     return res;
 }
 
+/*int power(int a, i64 b)
+{
+    int res = 1;
+    for (; b; b /= 2, a = 1LL * a * a)
+    {
+        if (b % 2)
+        {
+            res = 1LL * res * a;
+        }
+    }
+    return res;
+}/*
+
 /*std::ostream &operator<<(std::ostream &os, i128 n)
 {
     std::string s;
@@ -145,8 +188,9 @@ int power(int a, i64 b, int p)
 }*/
 
 const int mod = 1e9 + 7;
-constexpr int N = 2e5 + 7;
-constexpr int M = 2e3 + 7;
+const int inf = 0x7fffffff;
+constexpr int N = 2.01e5;
+constexpr int M = 2.01e3;
 
 void solve()
 {
