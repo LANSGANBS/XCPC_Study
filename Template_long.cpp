@@ -31,9 +31,9 @@
  *
  **/
 #include <bits/stdc++.h>
-#include <bits/extc++.h>
+// #include <bits/extc++.h>
 using namespace std;
-using namespace __gnu_pbds;
+// using namespace __gnu_pbds;
 #define i64 long long
 #define i128 __int128
 #define endl '\n'
@@ -45,7 +45,7 @@ using namespace __gnu_pbds;
 #define all(x) begin(x), end(x)
 #define mem(a, x) memset(a, x, sizeof(a))
 #define gcd(a, b) __gcd(a, b)
-#define lcm(a, b) (a / gcd(a, b) * b)
+#define mylcm(a, b) (a / gcd(a, b) * b)
 #define sz(x) (int)x.size()
 #define lowbit(x) (x & -x)
 #define pb push_back
