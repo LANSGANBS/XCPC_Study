@@ -194,13 +194,124 @@ constexpr int M = 2.01e3;
 
 void solve()
 {
+    int n;
+    cin >> n;
+    vector<int> a(n);
+    map<int, int> remain;
+    set<int> colors;
+
+    for (int i = 0; i < n; ++i)
+    {
+        cin >> a[i];
+        remain[a[i]]++;
+        colors.insert(a[i]);
+    }
+
+    map<int, bool> alice_has;
+    map<int, bool> bob_has;
+
+    int tot_a = n;
+    bool alice_turn = true;
+
+    while (tot_a > 0)
+    {
+        if (alice_turn)
+        {
+            int pick_color = -1;
+            for (auto color : colors)
+            {
+                if (!alice_has[color] && remain[color] == 1)
+                {
+                    pick_color = color;
+                    break;
+                }
+            }
+            if (pick_color == -1)
+            {
+                for (auto color : colors)
+                {
+                    if (!alice_has[color] && remain[color] > 0)
+                    {
+                        pick_color = color;
+                        break;
+                    }
+                }
+            }
+            if (pick_color == -1)
+            {
+                for (auto color : colors)
+                {
+                    if (remain[color] > 0)
+                    {
+                        pick_color = color;
+                        break;
+                    }
+                }
+            }
+            remain[pick_color]--;
+            alice_has[pick_color] = true;
+            tot_a--;
+        }
+        else
+        {
+            int pick_color = -1;
+            for (auto color : colors)
+            {
+                if (!alice_has[color] && remain[color] == 1)
+                {
+                    pick_color = color;
+                    break;
+                }
+            }
+            if (pick_color == -1)
+            {
+                for (auto color : colors)
+                {
+                    if (!alice_has[color] && remain[color] > 0)
+                    {
+                        pick_color = color;
+                        break;
+                    }
+                }
+            }
+            if (pick_color == -1)
+            {
+                for (auto color : colors)
+                {
+                    if (remain[color] > 0)
+                    {
+                        pick_color = color;
+                        break;
+                    }
+                }
+            }
+            remain[pick_color]--;
+            bob_has[pick_color] = true;
+            tot_a--;
+        }
+        alice_turn = !alice_turn;
+    }
+
+    int alice = 0;
+    for (auto color : colors)
+    {
+        if (alice_has[color])
+        {
+            alice++;
+            if (!bob_has[color])
+            {
+                alice++;
+            }
+        }
+    }
+    cout << alice << endl;
 }
 
 signed main()
 {
     buff;
     int tt = 1;
-    // cin >> tt;
+    cin >> tt;
     while (tt--)
     {
         solve();

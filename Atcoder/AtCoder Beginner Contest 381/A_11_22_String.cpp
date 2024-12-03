@@ -189,11 +189,44 @@ int power(int a, i64 b, int p)
 
 const int mod = 1e9 + 7;
 const int inf = 0x7fffffff;
-constexpr int N = 2.01e6;
+constexpr int N = 2.01e5;
 constexpr int M = 2.01e3;
+
+int n;
+string s;
 
 void solve()
 {
+    cin >> n;
+    cin >> s;
+    s = " " + s;
+    if (n % 2 == 0)
+    {
+        cout << "No" << endl;
+        return;
+    }
+    if (s[(n + 1) / 2] != '/')
+    {
+        cout << "No" << endl;
+        return;
+    }
+    for (int i = 1; i < (n + 1) / 2; i++)
+    {
+        if (s[i] != '1')
+        {
+            cout << "No" << endl;
+            return;
+        }
+    }
+    for (int i = (n + 1) / 2 + 1; i <= n; i++)
+    {
+        if (s[i] != '2')
+        {
+            cout << "No" << endl;
+            return;
+        }
+    }
+    cout << "Yes";
 }
 
 signed main()

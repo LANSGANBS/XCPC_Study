@@ -189,11 +189,14 @@ int power(int a, i64 b, int p)
 
 const int mod = 1e9 + 7;
 const int inf = 0x7fffffff;
-constexpr int N = 2.01e6;
+constexpr int N = 2.01e5;
 constexpr int M = 2.01e3;
 
 void solve()
 {
+    vector<int> a(3);
+    cin >> a;
+    cout << accumulate(all(a), 0) << endl;
 }
 
 signed main()

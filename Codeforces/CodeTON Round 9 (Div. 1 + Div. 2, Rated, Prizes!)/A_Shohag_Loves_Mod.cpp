@@ -189,18 +189,24 @@ int power(int a, i64 b, int p)
 
 const int mod = 1e9 + 7;
 const int inf = 0x7fffffff;
-constexpr int N = 2.01e6;
+constexpr int N = 2.01e5;
 constexpr int M = 2.01e3;
 
 void solve()
 {
+    int n;
+    cin >> n;
+    for (int i = 1; i <= n; i++)
+    {
+        cout << 2 * i - 1 << " \n"[i == n];
+    }
 }
 
 signed main()
 {
     buff;
     int tt = 1;
-    // cin >> tt;
+    cin >> tt;
     while (tt--)
     {
         solve();

@@ -189,11 +189,54 @@ int power(int a, i64 b, int p)
 
 const int mod = 1e9 + 7;
 const int inf = 0x7fffffff;
-constexpr int N = 2.01e6;
+constexpr int N = 2.01e5;
 constexpr int M = 2.01e3;
+
+vector<int> e[N];
+int n, t;
+bool dp[N];
+
+void dfs(int u, int pre = -1)
+{
+    int len = e[u].size();
+    bool ok = false;
+    for (int i = 0; i < len; i++)
+    {
+        int v = e[u][i];
+        if (v == pre)
+        {
+            continue;
+        }
+        dfs(v, u);
+        if (!dp[v])
+        {
+            ok = true;
+        }
+    }
+    dp[u] = ok;
+}
 
 void solve()
 {
+    cin >> n >> t;
+    for (int i = 0; i < n - 1; i++)
+    {
+        int u, v;
+        cin >> u >> v;
+        e[u].pb(v);
+        e[v].pb(u);
+    }
+    int u;
+    cin >> u;
+    dfs(u);
+    if (dp[u])
+    {
+        cout << "Ron" << endl;
+    }
+    else
+    {
+        cout << "Hermione" << endl;
+    }
 }
 
 signed main()

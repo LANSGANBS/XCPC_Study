@@ -189,18 +189,71 @@ int power(int a, i64 b, int p)
 
 const int mod = 1e9 + 7;
 const int inf = 0x7fffffff;
-constexpr int N = 2.01e6;
+constexpr int N = 2.01e5;
 constexpr int M = 2.01e3;
+
+int n, m, q;
+
+bool check(int one, vector<vector<int>> a)
+{
+    int ans = 0;
+    vector<vector<int>> dp(n + 7, vector<int>(m + 7, 0));
+    for (int i = 1; i <= n; i++)
+    {
+        for (int j = 1; j <= m; j++)
+        {
+            if (a[i][j] < one)
+            {
+                continue;
+            }
+            dp[i][j] = min({dp[i - 1][j], dp[i][j - 1], dp[i - 1][j - 1]}) + 1;
+        }
+    }
+    for (int i = 1; i <= n; i++)
+    {
+        for (int j = 1; j <= m; j++)
+        {
+            if (dp[i][j] > ans)
+            {
+                ans = dp[i][j];
+            }
+        }
+    }
+    return (ans >= one);
+}
 
 void solve()
 {
+    cin >> n >> m;
+    vector<vector<int>> a(n + 7, vector<int>(m + 7, 0));
+    for (int i = 1; i <= n; i++)
+    {
+        for (int j = 1; j <= m; j++)
+        {
+            cin >> a[i][j];
+        }
+    }
+    int lo = 1, hi = 1E9, ans;
+    while (lo < hi)
+    {
+        int m = (lo + hi + 1) / 2;
+        if (check(m, a))
+        {
+            ans = lo = m;
+        }
+        else
+        {
+            hi = m - 1;
+        }
+    }
+    cout << lo << endl;
 }
 
 signed main()
 {
     buff;
     int tt = 1;
-    // cin >> tt;
+    cin >> tt;
     while (tt--)
     {
         solve();

@@ -1,5 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
+#define LOCAL
 
 void solve()
 {
@@ -34,6 +35,9 @@ void solve()
 
 int main()
 {
+#ifdef LOCAL
+    freopen("C:\\MyCppCode_Vscode\\input.txt", "r", stdin);
+#endif
     ios::sync_with_stdio(false);
     cin.tie(0);
     int T;

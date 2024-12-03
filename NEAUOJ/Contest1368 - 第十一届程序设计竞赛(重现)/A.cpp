@@ -189,11 +189,31 @@ int power(int a, i64 b, int p)
 
 const int mod = 1e9 + 7;
 const int inf = 0x7fffffff;
-constexpr int N = 2.01e6;
+constexpr int N = 2.01e5;
 constexpr int M = 2.01e3;
 
 void solve()
 {
+    string s;
+    cin >> s;
+    stringstream ss(s);
+    string ans;
+    int cnt = 0;
+    while (getline(ss, ans, '_'))
+    {
+        if (!cnt)
+        {
+            cout << ans;
+        }
+        else
+        {
+            for (int i = 0; i < sz(ans); i++)
+            {
+                cout << (i == 0 ? (char)toupper(ans[i]) : (char)tolower(ans[i]));
+            }
+        }
+        cnt++;
+    }
 }
 
 signed main()

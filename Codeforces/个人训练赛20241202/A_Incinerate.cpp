@@ -189,18 +189,51 @@ int power(int a, i64 b, int p)
 
 const int mod = 1e9 + 7;
 const int inf = 0x7fffffff;
-constexpr int N = 2.01e6;
+constexpr int N = 2.01e5;
 constexpr int M = 2.01e3;
+
+pair<int, int> a[N];
+int b[N];
 
 void solve()
 {
+    int n, m;
+    cin >> n >> m;
+    for (int i = 1; i <= n; i++)
+    {
+        cin >> a[i].fr;
+    }
+    for (int i = 1; i <= n; i++)
+    {
+        cin >> a[i].sc;
+    }
+    sort(a + 1, a + 1 + n);
+    b[n + 1] = inf;
+    for (int i = n; i >= 1; i--)
+    {
+        b[i] = min(b[i + 1], a[i].sc);
+    }
+    int sums = 0, id = 1;
+    while (m > 0 && id <= n)
+    {
+        sums += m;
+        while (id <= n && a[id].fr <= sums)
+        {
+            id++;
+        }
+        if (id <= n)
+        {
+            m -= b[id];
+        }
+    }
+    cout << (m <= 0 ? "NO" : "YES") << endl;
 }
 
 signed main()
 {
     buff;
     int tt = 1;
-    // cin >> tt;
+    cin >> tt;
     while (tt--)
     {
         solve();

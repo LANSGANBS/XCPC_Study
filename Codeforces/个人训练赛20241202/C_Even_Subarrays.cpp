@@ -192,15 +192,41 @@ const int inf = 0x7fffffff;
 constexpr int N = 2.01e6;
 constexpr int M = 2.01e3;
 
+int a[N], sum[N], vis[N];
+
 void solve()
 {
+    vis[0] = 1;
+    int n;
+    cin >> n;
+    for (int i = 1; i <= n; i++)
+    {
+        cin >> a[i];
+        sum[i] = sum[i - 1] ^ a[i];
+    }
+    int hi = 1LL << (sizeof(hi) * CHAR_BIT - __builtin_clzll(n));
+    int ans = n * (n + 1) / 2;
+    for (int i = 1; i <= n; i++)
+    {
+        for (int j = 0; j <= __builtin_sqrt(hi); j++)
+        {
+            ans -= vis[sum[i] ^ (j * j)];
+        }
+        vis[sum[i]]++;
+    }
+    vis[0] = 0;
+    for (int i = 1; i <= n; i++)
+    {
+        vis[sum[i]] = 0;
+    }
+    cout << ans << endl;
 }
 
 signed main()
 {
     buff;
     int tt = 1;
-    // cin >> tt;
+    cin >> tt;
     while (tt--)
     {
         solve();

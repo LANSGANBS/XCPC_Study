@@ -189,11 +189,34 @@ int power(int a, i64 b, int p)
 
 const int mod = 1e9 + 7;
 const int inf = 0x7fffffff;
-constexpr int N = 2.01e6;
+constexpr int N = 2.01e5;
 constexpr int M = 2.01e3;
 
 void solve()
 {
+    int n, k, x;
+    cin >> n >> k >> x;
+    vi e(n);
+    cin >> e;
+    sort(all(e));
+    vi gaps;
+    for (int i = 1; i < n; ++i)
+    {
+        int diff = e[i] - e[i - 1];
+        if (diff > x)
+        {
+            gaps.push_back((diff - 1) / x);
+        }
+    }
+    sort(all(gaps));
+    int groups = sz(gaps) + 1;
+    int additions = 0;
+    for (int i = 0; i < gaps.size() and groups > k; ++i)
+    {
+        additions += gaps[i];
+        groups--;
+    }
+    cout << additions << endl;
 }
 
 signed main()

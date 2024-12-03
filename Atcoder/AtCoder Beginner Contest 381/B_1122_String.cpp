@@ -189,11 +189,55 @@ int power(int a, i64 b, int p)
 
 const int mod = 1e9 + 7;
 const int inf = 0x7fffffff;
-constexpr int N = 2.01e6;
+constexpr int N = 2.01e5;
 constexpr int M = 2.01e3;
+
+bool is1122String(const string &s)
+{
+    int n = sz(s);
+    if (n % 2 != 0)
+    {
+        return false;
+    }
+
+    unordered_map<char, int> charCount;
+    for (char c : s)
+    {
+        charCount[c]++;
+    }
+
+    for (const auto &pair : charCount)
+    {
+        if (pair.second != 2)
+        {
+            return false;
+        }
+    }
+
+    for (int i = 0; i < n; i += 2)
+    {
+        if (s[i] != s[i + 1])
+        {
+            return false;
+        }
+    }
+
+    return true;
+}
 
 void solve()
 {
+    string s;
+    cin >> s;
+
+    if (is1122String(s))
+    {
+        cout << "Yes" << endl;
+    }
+    else
+    {
+        cout << "No" << endl;
+    }
 }
 
 signed main()
