@@ -13,12 +13,29 @@ const int mod = 998244353;
 #define debug(...) 42
 #endif
 
-void solve() {}
+void solve() {
+  int n, k;
+  cin >> n >> k;
+  vector<int> x(n);
+  for (int i = 0; i < n; i++) {
+    cin >> x[i];
+  }
+  int g = 0;
+  for (int i = 1; i < n; i++) {
+    g = std::__gcd(g, abs(x[i] - x[i - 1]));
+  }
+  int delta = abs(k - x[0]);
+  if (delta % g == 0) {
+    cout << "YES" << endl;
+  } else {
+    cout << "NO" << endl;
+  }
+}
 
 signed main() {
   ios::sync_with_stdio(false);
   cin.tie(0), cout.tie(0);
   int T = 1;
-  // cin >> T;
+  cin >> T;
   while (T--) solve();
 }

@@ -6,6 +6,7 @@
                 "${workspaceFolder}/**"
             ],
             "defines": [
+                "LOCAL",
                 "_DEBUG",
                 "UNICODE",
                 "_UNICODE"

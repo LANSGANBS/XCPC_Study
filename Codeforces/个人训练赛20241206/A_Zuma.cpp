@@ -148,7 +148,34 @@ constexpr int M = 2.01e3;
 #define debug(...) 42
 #endif
 
-void solve() { cout << pow(2, 14) << endl; }
+void solve() {
+  int n;
+  cin >> n;
+  V<int> a(n + 7);
+  for (int i = 1; i <= n; i++) {
+    cin >> a[i];
+  }
+  V<V<int>> f(n + 7, vector<int>(n + 7, inf));
+  for (int i = 1; i <= n; i++) {
+    f[i][i] = 1;
+    f[i][i - 1] = 0;
+    f[i][i + 1] = 1 + (a[i] != a[i + 1]);
+  }
+  debug(f);
+  for (int l = 3; l <= n; l++) {
+    for (int i = 1; i <= n; i++) {
+      int j = i + l - 1;
+      if (j > n) {
+        break;
+      }
+      if (a[i] == a[j]) f[i][j] = f[i + 1][j - 1];
+      for (int m = i; m <= j - 1; m++) {
+        f[i][j] = min(f[i][j], f[i][m] + f[m + 1][j]);
+      }
+    }
+  }
+  cout << f[1][n] << endl;
+}
 
 signed main() {
   setIO();
