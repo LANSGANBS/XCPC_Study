@@ -16,7 +16,6 @@ using namespace std;
 #define int ll
 #define ll long long
 #define i64 long long
-#define i128 __int128
 #define fr first
 #define sc second
 #define tcT template <class T
@@ -27,7 +26,6 @@ void setPrec() { cout << fixed << setprecision(15); }
 void setIO() { unsyncIO(), setPrec(); }
 
 inline int gcd(int a, int b) { return b ? gcd(b, a % b) : a; }
-inline i128 gcd128(i128 a, i128 b) { return b ? gcd(b, a % b) : a; }
 inline int cdiv(int a, int b) { return a / b + ((a ^ b) > 0 && a % b); }
 inline int fdiv(int a, int b) { return a / b - ((a ^ b) < 0 && a % b); }
 
@@ -70,16 +68,6 @@ tcT > ostream &operator<<(ostream &out, const vector<T> &a) {
     out << ' ' << a[i];
   }
   return out;
-}
-
-std::ostream &operator<<(std::ostream &os, i128 n) {
-  std::string s;
-  while (n) {
-    s += '0' + n % 10;
-    n /= 10;
-  }
-  std::reverse(s.begin(), s.end());
-  return os << s;
 }
 
 inline int power(int a, i64 b, int p = 1e9 + 7) {
@@ -126,9 +114,9 @@ tcTU > T lstTrue(T lo, T hi, U f) {
   return lo;
 }
 
-constexpr int mod = 1e9 + 7;
-constexpr int inf = 0x7fffffff;
-constexpr int N = 1.01e6;
+const int mod = 1e9 + 7;
+const int inf = 0x7fffffff;
+constexpr int N = 2.01e6;
 constexpr int M = 2.01e3;
 
 #ifdef LOCAL
@@ -137,7 +125,19 @@ constexpr int M = 2.01e3;
 #define debug(...) 42
 #endif
 
-void solve() {}
+void solve() {
+  int n;
+  cin >> n;
+  V<int> a(n);
+  cin >> a;
+  sort(all(a));
+  cout << a[n - 1] - a[0] << ' ';
+  if ((a[n - 1] - a[0]) % 2 == 0) {
+    cout << a[0] + (a[n - 1] - a[0]) / 2 << endl;
+  } else {
+    cout << a[0] + (a[n - 1] - a[0] + 1) / 2 << endl;
+  }
+}
 
 signed main() {
   setIO();

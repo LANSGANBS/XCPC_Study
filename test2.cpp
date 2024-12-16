@@ -26,9 +26,10 @@ void unsyncIO() { cin.tie(0)->sync_with_stdio(0); }
 void setPrec() { cout << fixed << setprecision(15); }
 void setIO() { unsyncIO(), setPrec(); }
 
-int gcd(int a, int b) { return b ? gcd(b, a % b) : a; }
-int cdiv(int a, int b) { return a / b + ((a ^ b) > 0 && a % b); }
-int fdiv(int a, int b) { return a / b - ((a ^ b) < 0 && a % b); }
+inline int gcd(int a, int b) { return b ? gcd(b, a % b) : a; }
+inline i128 gcd128(i128 a, i128 b) { return b ? gcd(b, a % b) : a; }
+inline int cdiv(int a, int b) { return a / b + ((a ^ b) > 0 && a % b); }
+inline int fdiv(int a, int b) { return a / b - ((a ^ b) < 0 && a % b); }
 
 tcT > using V = vector<T>;
 tcTU > using PR = pair<T, U>;
@@ -71,27 +72,7 @@ tcT > ostream &operator<<(ostream &out, const vector<T> &a) {
   return out;
 }
 
-int power(int a, i64 b) {
-  int res = 1;
-  for (; b; b /= 2, a = 1LL * a * a) {
-    if (b % 2) {
-      res = 1LL * res * a;
-    }
-  }
-  return res;
-}
-
-/*int power(int a, i64 b, int p) {
-  int res = 1;
-  for (; b; b /= 2, a = 1LL * a * a % p) {
-    if (b % 2) {
-      res = 1LL * res * a % p;
-    }
-  }
-  return res;
-}*/
-
-/*std::ostream &operator<<(std::ostream &os, i128 n) {
+std::ostream &operator<<(std::ostream &os, i128 n) {
   std::string s;
   while (n) {
     s += '0' + n % 10;
@@ -99,9 +80,17 @@ int power(int a, i64 b) {
   }
   std::reverse(s.begin(), s.end());
   return os << s;
-}*/
+}
 
-/*i128 gcd(i128 a, i128 b) { return b ? gcd(b, a % b) : a; }*/
+inline int power(int a, i64 b, int p = 1e9 + 7) {
+  int res = 1;
+  for (; b; b /= 2, a = 1LL * a * a % p) {
+    if (b % 2) {
+      res = 1LL * res * a % p;
+    }
+  }
+  return res;
+}
 
 tcT > bool ckmin(T &a, const T &b) { return b < a ? a = b, 1 : 0; }
 tcT > bool ckmax(T &a, const T &b) { return a < b ? a = b, 1 : 0; }
@@ -137,9 +126,9 @@ tcTU > T lstTrue(T lo, T hi, U f) {
   return lo;
 }
 
-const int mod = 1e9 + 7;
-const int inf = 0x7fffffff;
-constexpr int N = 2.01e6;
+constexpr int mod = 1e9 + 7;
+constexpr int inf = 0x7fffffff;
+constexpr int N = 1.01e6;
 constexpr int M = 2.01e3;
 
 #ifdef LOCAL
@@ -148,7 +137,14 @@ constexpr int M = 2.01e3;
 #define debug(...) 42
 #endif
 
-void solve() { cout << pow(2, 14) << endl; }
+void solve() {
+  int n;
+  cin >> n;
+  V<int> a(n);
+  cin >> a;
+  sort(all(a));
+  cout << a << endl;
+}
 
 signed main() {
   setIO();

@@ -126,9 +126,9 @@ tcTU > T lstTrue(T lo, T hi, U f) {
   return lo;
 }
 
-constexpr int mod = 1e9 + 7;
-constexpr int inf = 0x7fffffff;
-constexpr int N = 1.01e6;
+const int mod = 1e9 + 7;
+const int inf = 0x7fffffff;
+constexpr int N = 2.01e6;
 constexpr int M = 2.01e3;
 
 #ifdef LOCAL
@@ -137,7 +137,22 @@ constexpr int M = 2.01e3;
 #define debug(...) 42
 #endif
 
-void solve() {}
+void solve() {
+  int n, a, b, c;
+  cin >> n >> a >> b >> c;
+  int cnt = 0;
+  while (n >= min({a, b, c})) {
+    if (n >= a) {
+      n -= a;
+    } else if (n >= b) {
+      n -= b;
+    } else if (n >= c) {
+      n -= c;
+    }
+    cnt++;
+  }
+  cout << cnt << endl;
+}
 
 signed main() {
   setIO();

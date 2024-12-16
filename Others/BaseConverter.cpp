@@ -126,9 +126,9 @@ tcTU > T lstTrue(T lo, T hi, U f) {
   return lo;
 }
 
-constexpr int mod = 1e9 + 7;
-constexpr int inf = 0x7fffffff;
-constexpr int N = 1.01e6;
+const int mod = 1e9 + 7;
+const int inf = 0x7fffffff;
+constexpr int N = 2.01e6;
 constexpr int M = 2.01e3;
 
 #ifdef LOCAL
@@ -137,10 +137,84 @@ constexpr int M = 2.01e3;
 #define debug(...) 42
 #endif
 
-void solve() {}
+// BaseConverter::xtox(a, b, s)  // 将s的a进制数字转换为b进制数字
+
+struct BaseConverter {
+  static int charToValue(char ch) {
+    if (isdigit(ch))
+      return ch - '0';
+    else if (isalpha(ch))
+      return toupper(ch) - 'A' + 10;
+    else
+      return -1;
+  }
+
+  static char valueToChar(int val) {
+    if (val >= 0 && val <= 9)
+      return val + '0';
+    else if (val >= 10 && val < 36)
+      return val - 10 + 'A';
+    else
+      return '?';
+  }
+  static std::string xtox(int a, int b, const std::string &c) {
+    long long value = 0;
+    for (char ch : c) {
+      int digit = charToValue(ch);
+      if (digit < 0 || digit >= a) {
+        throw std::invalid_argument("Error");
+      }
+      value = value * a + digit;
+    }
+    if (value == 0) return "0";
+    std::string result;
+    while (value > 0) {
+      int remainder = value % b;
+      result += valueToChar(remainder);
+      value /= b;
+    }
+    std::reverse(result.begin(), result.end());
+    return result;
+  }
+};
+
+void solve() {
+  cout << "+ - * /" << endl;
+  string s;
+  cin >> s;
+  cout << "a进制的s1 b进制的s2 c进制的ans" << endl;
+  int a, b, c;
+  string s1, s2;
+  cin >> a >> s1 >> b >> s2 >> c;
+  if (s == "+") {
+    cout << BaseConverter::xtox(
+                10, c,
+                (to_string(stoll(BaseConverter::xtox(a, 10, s1)) +
+                           stoll(BaseConverter::xtox(b, 10, s2)))))
+         << endl;
+  } else if (s == "-") {
+    cout << BaseConverter::xtox(
+                10, c,
+                (to_string(stoll(BaseConverter::xtox(a, 10, s1)) -
+                           stoll(BaseConverter::xtox(b, 10, s2)))))
+         << endl;
+  } else if (s == "*") {
+    cout << BaseConverter::xtox(
+                10, c,
+                (to_string(stoll(BaseConverter::xtox(a, 10, s1)) *
+                           stoll(BaseConverter::xtox(b, 10, s2)))))
+         << endl;
+  } else if (s == "/") {
+    cout << BaseConverter::xtox(
+                10, c,
+                (to_string(stoll(BaseConverter::xtox(a, 10, s1)) /
+                           stoll(BaseConverter::xtox(b, 10, s2)))))
+         << endl;
+  }
+}
 
 signed main() {
-  setIO();
+  // setIO();
   int tt = 1;
   // cin >> tt;
   while (tt--) {
