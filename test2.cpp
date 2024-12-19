@@ -137,14 +137,7 @@ constexpr int M = 2.01e3;
 #define debug(...) 42
 #endif
 
-void solve() {
-  int n;
-  cin >> n;
-  V<int> a(n);
-  cin >> a;
-  sort(all(a));
-  cout << a << endl;
-}
+void solve() {}
 
 signed main() {
   setIO();
