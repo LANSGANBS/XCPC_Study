@@ -137,7 +137,21 @@ constexpr int M = 2.01e3;
 #define debug(...) 42
 #endif
 
-void solve() {}
+void solve() {
+  int n, m;
+  vector f(n + 1, V<int>(m + 1));
+  cin >> n >> m;
+  for (int i = 0; i < n; i++) {
+    for (int j = 0; j < i; j++) {
+      cin >> f[i][j];
+    }
+  }
+  for (int i = 0; i < n; i++) {
+    for (int j = 0; j < i; j++) {
+      cout << f[i][j] << " \n"[i == i - 1];
+    }
+  }
+}
 
 signed main() {
   setIO();
