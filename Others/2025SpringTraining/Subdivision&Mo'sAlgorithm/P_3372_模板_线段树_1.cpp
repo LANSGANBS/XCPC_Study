@@ -138,7 +138,71 @@ constexpr int M = 2.01e3;
 #define debug(...) 42
 #endif
 
-void solve() {}
+int a[N], st[N], ed[N], sum[N], add[N], len, id[N];
+
+void change(int l, int r, int k) {
+  if (id[l] == id[r]) {
+    for (int i = l; i <= r; i++) {
+      a[i] += k;
+      sum[id[i]] += k;
+    }
+  } else {
+    for (int i = l; i <= ed[l]; i++) {
+      a[i] += k;
+      sum[id[i]] += k;
+    }
+    for (int i = st[r]; i <= r; i++) {
+      a[i] += k;
+      sum[id[i]] += k;
+    }
+    for (int i = id[l] + 1; i < id[r]; i++) {
+      add[i] += k;
+    }
+  }
+}
+
+int query(int l, int r) {
+  int ans = 0;
+  if (id[l] == id[r]) {
+    for (int i = l; i <= r; i++) {
+      ans += a[i] + add[id[i]];
+    }
+  } else {
+    for (int i = l; i <= ed[l]; i++) {
+      ans += a[i] + add[id[i]];
+    }
+    for (int i = st[r]; i <= r; i++) {
+      ans += a[i] + add[id[i]];
+    }
+    for (int i = id[l] + 1; i < id[r]; i++) {
+      ans += sum[i] + add[i] * (ed[i] - st[i] + 1);
+    }
+  }
+  return ans;
+}
+
+void solve() {
+  int n, m;
+  cin >> n >> m;
+  len = sqrt(n);
+  for (int i = 1; i <= n; i++) {
+    cin >> a[i];
+    id[i] = (i - 1) / len + 1;
+    st[i] = (id[i] - 1) * len + 1;
+    ed[i] = min(id[i] * len, n);
+    sum[id[i]] += a[i];
+  }
+  while (m--) {
+    int op, x, y, k;
+    cin >> op >> x >> y;
+    if (op == 1) {
+      cin >> k;
+      change(x, y, k);
+    } else {
+      cout << query(x, y) << endl;
+    }
+  }
+}
 
 signed main() {
   setIO();

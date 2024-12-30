@@ -138,10 +138,33 @@ constexpr int M = 2.01e3;
 #define debug(...) 42
 #endif
 
-void solve() {}
+void solve() {
+  cout << "是否有期中考试 没有输入0 有输入1: " << endl;
+  int op;
+  cin >> op;
+  if (op == 0) {
+    cout << "课程平时分与期末占比 如37 46 55: " << endl;
+    string s;
+    cin >> s;
+    cout << "期末考试至少需要考(折合前): "
+         << ceil((60 - (s[0] - '0') * 10) / ((double)(s[1] - '0') / 10)) << "分"
+         << endl;
+  } else {
+    cout << "课程平时分 期中占比 期末占比 如226 235: " << endl;
+    string s;
+    cin >> s;
+    cout << "期中考试成绩为(折合前): " << endl;
+    int score;
+    cin >> score;
+    cout << "期末考试至少需要考(折合前): "
+         << ceil((60 - score * (s[0] - '0') / 10 - (s[1] - '0') * 10) /
+                 ((double)(s[2] - '0') / 10))
+         << "分" << endl;
+  }
+}
 
 signed main() {
-  setIO();
+  // setIO();
   int tt = 1;
   // cin >> tt;
   while (tt--) {

@@ -8,6 +8,7 @@ using namespace std;
 #define pow power
 #define all(x) begin(x), end(x)
 #define mem(a, x) memset(a, x, sizeof(a))
+#define gcd(a, b) gcdint(a, b)
 #define lcm(a, b) (a / gcd(a, b) * b)
 #define sz(x) (int)x.size()
 #define lowbit(x) (x & -x)
@@ -26,8 +27,8 @@ void unsyncIO() { cin.tie(0)->sync_with_stdio(0); }
 void setPrec() { cout << fixed << setprecision(15); }
 void setIO() { unsyncIO(), setPrec(); }
 
-inline int gcd(int a, int b) { return b ? gcd(b, a % b) : a; }
-inline i128 gcd128(i128 a, i128 b) { return b ? gcd(b, a % b) : a; }
+inline int gcdint(int a, int b) { return b ? gcdint(b, a % b) : a; }
+inline i128 gcd128(i128 a, i128 b) { return b ? gcd128(b, a % b) : a; }
 inline int cdiv(int a, int b) { return a / b + ((a ^ b) > 0 && a % b); }
 inline int fdiv(int a, int b) { return a / b - ((a ^ b) < 0 && a % b); }
 
@@ -137,21 +138,7 @@ constexpr int M = 2.01e3;
 #define debug(...) 42
 #endif
 
-void solve() {
-  int n, m;
-  vector f(n + 1, V<int>(m + 1));
-  cin >> n >> m;
-  for (int i = 0; i < n; i++) {
-    for (int j = 0; j < i; j++) {
-      cin >> f[i][j];
-    }
-  }
-  for (int i = 0; i < n; i++) {
-    for (int j = 0; j < i; j++) {
-      cout << f[i][j] << " \n"[i == i - 1];
-    }
-  }
-}
+void solve() {}
 
 signed main() {
   setIO();

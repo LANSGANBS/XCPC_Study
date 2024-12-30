@@ -8,7 +8,6 @@ using namespace std;
 #define pow power
 #define all(x) begin(x), end(x)
 #define mem(a, x) memset(a, x, sizeof(a))
-#define gcd(a, b) gcdint(a, b)
 #define lcm(a, b) (a / gcd(a, b) * b)
 #define sz(x) (int)x.size()
 #define lowbit(x) (x & -x)
@@ -27,8 +26,8 @@ void unsyncIO() { cin.tie(0)->sync_with_stdio(0); }
 void setPrec() { cout << fixed << setprecision(15); }
 void setIO() { unsyncIO(), setPrec(); }
 
-inline int gcdint(int a, int b) { return b ? gcdint(b, a % b) : a; }
-inline i128 gcd128(i128 a, i128 b) { return b ? gcd128(b, a % b) : a; }
+inline int gcd(int a, int b) { return b ? gcd(b, a % b) : a; }
+inline i128 gcd128(i128 a, i128 b) { return b ? gcd(b, a % b) : a; }
 inline int cdiv(int a, int b) { return a / b + ((a ^ b) > 0 && a % b); }
 inline int fdiv(int a, int b) { return a / b - ((a ^ b) < 0 && a % b); }
 
@@ -138,7 +137,84 @@ constexpr int M = 2.01e3;
 #define debug(...) 42
 #endif
 
-void solve() {}
+void solve() {
+  int N, M, Sx, Sy;
+  cin >> N >> M >> Sx >> Sy;
+  unordered_map<int, vector<int>> row;
+  unordered_map<int, vector<int>> col;
+  row.reserve(N * 2);
+  row.max_load_factor(0.7f);
+  col.reserve(N * 2);
+  col.max_load_factor(0.7f);
+  VP<int, int> houses(N);
+  for (auto &p : houses) {
+    cin >> p.first >> p.second;
+  }
+  for (auto &p : houses) {
+    row[p.second].pb(p.first);
+    col[p.first].pb(p.second);
+  }
+  for (auto &r : row) {
+    sort(r.second.begin(), r.second.end());
+  }
+  for (auto &c : col) {
+    sort(c.second.begin(), c.second.end());
+  }
+  unordered_set<int> visited;
+  visited.reserve(N * 2);
+  visited.max_load_factor(0.7f);
+  auto hashf = [&](int x, int y) {
+    unsigned int xx = (unsigned int)(x + 1000000000LL);
+    unsigned int yy = (unsigned int)(y + 1000000000LL);
+    return ((xx << 20) ^ yy);
+  };
+  int x = Sx, y = Sy, ans = 0;
+  while (M--) {
+    char d;
+    int c;
+    cin >> d >> c;
+    int nx = x, ny = y;
+    if (d == 'L') {
+      nx -= c;
+    } else if (d == 'R') {
+      nx += c;
+    } else if (d == 'U') {
+      ny += c;
+    } else {
+      ny -= c;
+    }
+    if (d == 'L' || d == 'R') {
+      int low = min(x, nx), high = max(x, nx);
+      auto &vec = row[y];
+      auto it1 = lower_bound(vec.begin(), vec.end(), low);
+      auto it2 = upper_bound(vec.begin(), vec.end(), high);
+      for (; it1 != it2; it1++) {
+        int xx = *it1;
+        unsigned int hval = hashf(xx, y);
+        if (!visited.count(hval)) {
+          visited.insert(hval);
+          ans++;
+        }
+      }
+    } else {
+      int low = min(y, ny), high = max(y, ny);
+      auto &vec = col[x];
+      auto it1 = lower_bound(vec.begin(), vec.end(), low);
+      auto it2 = upper_bound(vec.begin(), vec.end(), high);
+      for (; it1 != it2; ++it1) {
+        int yy = *it1;
+        unsigned int hval = hashf(x, yy);
+        if (!visited.count(hval)) {
+          visited.insert(hval);
+          ans++;
+        }
+      }
+    }
+    x = nx;
+    y = ny;
+  }
+  cout << x << " " << y << " " << ans << "\n";
+}
 
 signed main() {
   setIO();

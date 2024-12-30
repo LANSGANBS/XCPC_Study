@@ -138,7 +138,73 @@ constexpr int M = 2.01e3;
 #define debug(...) 42
 #endif
 
-void solve() {}
+int a[N], sum, ans1[N], len, ans2[N], cnt[N];
+
+struct query {
+  int l, r, id;
+} q[N];
+
+void add(int x) {
+  sum += cnt[x];
+  cnt[x]++;
+}
+
+void del(int x) {
+  cnt[x]--;
+  sum -= cnt[x];
+}
+
+void solve() {
+  int n, m;
+  cin >> n >> m;
+  len = n / sqrt(m);
+  for (int i = 1; i <= n; i++) cin >> a[i];
+  for (int i = 1; i <= m; i++) {
+    cin >> q[i].l >> q[i].r;
+    q[i].id = i;
+  }
+  sort(q + 1, q + m + 1, [](const query &lhs, const query &rhs) {
+    if ((lhs.l - 1) / len != (rhs.l - 1) / len) {
+      return lhs.l < rhs.l;
+    }
+    if (((lhs.l - 1) / len + 1) & 1) {
+      return lhs.r < rhs.r;
+    }
+    return lhs.r > rhs.r;
+  });
+  for (int i = 1, l = 1, r = 0; i <= m; i++) {
+    if (q[i].l == q[i].r) {
+      ans1[q[i].id] = 0;
+      ans2[q[i].id] = 1;
+      continue;
+    }
+    while (l > q[i].l) {
+      add(a[--l]);
+    }
+    while (r < q[i].r) {
+      add(a[++r]);
+    }
+    while (l < q[i].l) {
+      del(a[l++]);
+    }
+    while (r > q[i].r) {
+      del(a[r--]);
+    }
+    if (sum == 0) {
+      ans1[q[i].id] = 0;
+      ans2[q[i].id] = 1;
+      continue;
+    }
+    ans1[q[i].id] = sum;
+    ans2[q[i].id] = (r - l + 1) * (r - l) / 2;
+    int t = __gcd(ans1[q[i].id], ans2[q[i].id]);
+    ans1[q[i].id] /= t;
+    ans2[q[i].id] /= t;
+  }
+  for (int i = 1; i <= m; i++) {
+    cout << ans1[i] << '/' << ans2[i] << endl;
+  }
+}
 
 signed main() {
   setIO();

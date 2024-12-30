@@ -14,8 +14,8 @@ using namespace std;
 #define lowbit(x) (x & -x)
 #define pb push_back
 #define EPS 1e-7
-#define int ll
-#define ll long long
+// #define int ll
+// #define ll long long
 #define i64 long long
 #define i128 __int128
 #define fr first
@@ -138,7 +138,45 @@ constexpr int M = 2.01e3;
 #define debug(...) 42
 #endif
 
-void solve() {}
+int st[N], ed[N], mx[N], id[N], a[N], len;
+
+int query() {
+  int ans = 0;
+  int l, r;
+  cin >> l >> r;
+  if (id[l] == id[r]) {
+    for (int i = l; i <= r; i++) {
+      ans = max(ans, a[i]);
+    }
+  } else {
+    for (int i = l; i <= ed[id[l]]; i++) {
+      ans = max(ans, a[i]);
+    }
+    for (int i = st[id[r]]; i <= r; i++) {
+      ans = max(ans, a[i]);
+    }
+    for (int i = id[l] + 1; i <= id[r] - 1; i++) {
+      ans = max(ans, mx[i]);
+    }
+  }
+  return ans;
+}
+
+void solve() {
+  int n, m;
+  cin >> n >> m;
+  len = sqrt(n);
+  for (int i = 1; i <= n; i++) {
+    cin >> a[i];
+    id[i] = (i - 1) / len + 1;
+    st[id[i]] = (id[i] - 1) * len + 1;
+    ed[id[i]] = id[i] * len;
+    mx[id[i]] = (i == st[id[i]]) ? a[i] : max(mx[id[i]], a[i]);
+  }
+  while (m--) {
+    cout << query() << endl;
+  }
+}
 
 signed main() {
   setIO();
